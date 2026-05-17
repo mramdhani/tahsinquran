@@ -2,9 +2,9 @@
   <div class="min-h-screen bg-[#fdfcf9] text-[#1f2937] pb-24 font-sans select-none relative">
     
     <!-- Top Floating Header Bar (Elegant Emerald & Gold Theme) -->
-    <header class="sticky top-0 bg-[#064e3b]/95 backdrop-blur-md border-b border-[#053e2f] px-4 py-3.5 shadow-xl z-30 flex items-center justify-between gap-3 relative">
-      <!-- Back Button -->
-      <NuxtLink to="/" class="p-2 rounded-xl bg-[#0b5e47] hover:bg-[#0c6b52] text-[#fdfaf3] border border-[#0d7d60] transition-all flex items-center justify-center cursor-pointer shadow-md active:scale-95">
+    <header class="hidden sm:flex sticky top-0 bg-[#064e3b]/95 backdrop-blur-md border-b border-[#053e2f] px-4 py-3.5 shadow-xl z-30 items-center justify-between gap-3 relative">
+      <!-- Back Button (Hidden on Mobile) -->
+      <NuxtLink to="/" class="hidden sm:flex p-2 rounded-xl bg-[#0b5e47] hover:bg-[#0c6b52] text-[#fdfaf3] border border-[#0d7d60] transition-all items-center justify-center cursor-pointer shadow-md active:scale-95">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
         </svg>
@@ -15,7 +15,8 @@
         @click="isNavModalOpen = true" 
         class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 px-3 sm:px-4 py-2 bg-[#0b5e47] border border-[#0d7d60] hover:border-[#d4af37]/60 text-[#fdfaf3] rounded-2xl focus:outline-none transition-all cursor-pointer shadow-md text-xs sm:text-sm font-bold active:scale-95 hover:bg-[#0c6b52] z-10"
       >
-        <span class="max-w-[140px] sm:max-w-none truncate">Hal: {{ currentPageNum }} • Juz: {{ currentJuzNum }} • {{ surahInfo?.name_latin || 'Memuat...' }}</span>
+        <span class="hidden sm:inline max-w-[140px] sm:max-w-none truncate">Hal: {{ currentPageNum }} • Juz: {{ currentJuzNum }} • {{ surahInfo?.name_latin || 'Memuat...' }}</span>
+        <span class="inline sm:hidden font-extrabold">{{ surahInfo?.name_latin || 'Memuat...' }}</span>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#d4af37] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
         </svg>
@@ -41,55 +42,147 @@
     <!-- Main Content Reader Container (Optimized widths & paddings for mobile) -->
     <main class="max-w-3xl mx-auto px-0 sm:px-6 py-4 sm:py-12 relative z-10">
       
-      <!-- Top Surah Banner Card (Sleek Emerald Glass Design) - HIDE ON MOBILE TO SAVE SPACE -->
-      <div class="hidden sm:flex bg-[#064e3b] border border-[#053e2f] rounded-3xl p-6 sm:p-8 flex-col md:flex-row items-center justify-between gap-6 w-full shadow-lg mb-12">
-        <!-- Calligraphy (Left side) -->
-        <div class="h-20 sm:h-24 md:h-28 flex items-center justify-center shrink-0">
-          <img 
-            v-if="selectedSurahId"
-            :src="`https://cdn.jsdelivr.net/gh/gyenabubakar/surah-name-glyphs@master/svg/${selectedSurahId}.svg`" 
-            :alt="surahInfo?.name_latin" 
-            class="h-full object-contain select-none pointer-events-none filter drop-shadow-[0_2px_8px_rgba(255,255,255,0.15)]"
-            style="filter: invert(1) brightness(1.8);" 
-          />
-        </div>
-        
-        <!-- Surah Details (Right side) -->
-        <div class="text-center md:text-right flex flex-col items-center md:items-end gap-1.5">
-          <div class="flex items-center gap-3">
-            <span class="text-xl sm:text-2xl font-extrabold text-[#fdfaf3]">{{ selectedSurahId }}. {{ surahInfo?.name_latin || 'Memuat...' }}</span>
-          </div>
-          <p class="text-xs sm:text-sm text-[#a7f3d0] font-semibold italic">{{ surahInfo?.name_translation }}</p>
-          <div class="text-[#d1fae5] text-xs sm:text-sm font-bold tracking-wide mt-1">
-            {{ surahInfo?.total_ayats }} Ayat • {{ surahInfo?.revelation_type === 'Meccan' ? 'Makkiyah' : 'Madaniyah' }}
-          </div>
-        </div>
-      </div>
-
-      <!-- Scrollable Quran Pages Stack -->
-      <div class="space-y-6 sm:space-y-12">
+      <!-- Scrollable Quran Pages Stack (Horizontal Swipe on Mobile / Natural Scroll on Desktop) -->
+      <div 
+        ref="scrollContainer"
+        class="flex flex-row sm:flex-col overflow-x-auto sm:overflow-x-visible scrollbar-hide w-full sm:space-y-12 md:space-y-16 snap-x snap-mandatory"
+      >
         <div 
           v-for="page in surahPages" 
           :key="page.pageNumber"
           :id="`page-block-${page.pageNumber}`"
-          class="relative bg-white border-0 sm:border border-[#e6e2d8] rounded-none sm:rounded-[2.5rem] px-2 py-4 sm:p-12 mb-4 sm:mb-10 shadow-none sm:shadow-md overflow-hidden"
+          @click="toggleControls"
+          class="relative w-full sm:w-auto shrink-0 snap-center snap-always bg-[#fdfcf7] rounded-none px-4 py-6 sm:p-12 mb-4 sm:mb-10 overflow-hidden flex flex-col min-h-[500px] border-r border-[#e6e2d8] last:border-r-0 sm:border-r-0 sm:border-b sm:border-[#e6e2d8] sm:last:border-b-0 cursor-pointer"
         >
-          
-          <!-- Bismillah Header (Centered Calligraphy Only) -->
+          <!-- 1. Elegant Integrated Surah Plate (Renders only at the top of the first page of the Surah) -->
           <div 
-            v-if="page.pageNumber === firstPageOfSurah && selectedSurahId !== 1 && selectedSurahId !== 9" 
-            class="text-center mb-4 sm:mb-8 flex flex-col items-center gap-3"
+            v-if="page.pageNumber === firstPageOfSurah"
+            class="w-[calc(100%+2rem)] sm:w-[calc(100%+6rem)] border-b-[3px] border-[#c29b38] bg-[#ffffff] py-4 sm:py-6 px-0 mx-[-1rem] sm:mx-[-3rem] mt-[-1.5rem] sm:mt-[-3rem] mb-6 sm:mb-8 rounded-t-none sm:rounded-t-[2.4rem] relative overflow-hidden flex flex-col items-center justify-center select-none min-h-[80px] sm:min-h-[105px] z-10"
           >
-            <div class="font-uthmani text-2xl sm:text-4xl text-[#064e3b] leading-normal select-none py-1 sm:py-2" dir="rtl">
-              بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+            <!-- SVG containing the magnificent seamless Islamic patterns & central cartouche -->
+            <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 600 80" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Outer gold/teal double borders wrapping the entire rectangular spanduk -->
+              <rect x="2" y="2" width="596" height="76" rx="6" fill="#ffffff" stroke="#c29b38" stroke-width="2.2" />
+              <rect x="5" y="5" width="590" height="70" rx="4" fill="none" stroke="#14b8a6" stroke-width="0.8" stroke-dasharray="3,2" />
+              
+              <!-- Symmetrical Left Side Classical Quranic Illumination (Rosette & Rumi split-palmettes) -->
+              <g opacity="0.95">
+                <!-- Golden 8-pointed star rosette at center -->
+                <circle cx="80" cy="40" r="12" fill="#ffffff" stroke="#c29b38" stroke-width="1.2" />
+                <path d="M 80 26 L 80 54 M 66 40 L 94 40 M 70 30 L 90 50 M 70 50 L 90 30" stroke="#14b8a6" stroke-width="0.8" />
+                <circle cx="80" cy="40" r="6" fill="#c29b38" />
+                <circle cx="80" cy="40" r="3" fill="#ffffff" />
+                
+                <!-- Elegant flowing branches branching outwards -->
+                <path d="M 68 40 C 48 32, 33 48, 18 40" stroke="#c29b38" stroke-width="1.5" fill="none" />
+                <path d="M 92 40 C 112 32, 127 48, 142 40" stroke="#c29b38" stroke-width="1.5" fill="none" />
+                
+                <!-- Teal teardrop leaves (traditional Tezhip motif) -->
+                <path d="M 33 36 C 25 28, 20 40, 28 44 C 32 41, 36 38, 33 36 Z" fill="#14b8a6" stroke="#c29b38" stroke-width="0.6" opacity="0.9" />
+                <path d="M 127 36 C 119 28, 114 40, 122 44 C 126 41, 130 38, 127 36 Z" fill="#14b8a6" stroke="#c29b38" stroke-width="0.6" opacity="0.9" />
+                
+                <!-- Gold Rumi split-palmettes surrounding the rosette -->
+                <path d="M 52 28 Q 66 16 80 26 Q 66 24 52 28 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
+                <path d="M 52 52 Q 66 64 80 54 Q 66 56 52 52 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
+                <path d="M 108 28 Q 94 16 80 26 Q 94 24 108 28 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
+                <path d="M 108 52 Q 94 64 80 54 Q 94 56 108 52 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
+              </g>
+
+              <!-- Symmetrical Right Side Classical Quranic Illumination (Perfect Mirror) -->
+              <g opacity="0.95" transform="translate(600,0) scale(-1,1)">
+                <!-- Golden 8-pointed star rosette at center -->
+                <circle cx="80" cy="40" r="12" fill="#ffffff" stroke="#c29b38" stroke-width="1.2" />
+                <path d="M 80 26 L 80 54 M 66 40 L 94 40 M 70 30 L 90 50 M 70 50 L 90 30" stroke="#14b8a6" stroke-width="0.8" />
+                <circle cx="80" cy="40" r="6" fill="#c29b38" />
+                <circle cx="80" cy="40" r="3" fill="#ffffff" />
+                
+                <!-- Elegant flowing branches branching outwards -->
+                <path d="M 68 40 C 48 32, 33 48, 18 40" stroke="#c29b38" stroke-width="1.5" fill="none" />
+                <path d="M 92 40 C 112 32, 127 48, 142 40" stroke="#c29b38" stroke-width="1.5" fill="none" />
+                
+                <!-- Teal teardrop leaves (traditional Tezhip motif) -->
+                <path d="M 33 36 C 25 28, 20 40, 28 44 C 32 41, 36 38, 33 36 Z" fill="#14b8a6" stroke="#c29b38" stroke-width="0.6" opacity="0.9" />
+                <path d="M 127 36 C 119 28, 114 40, 122 44 C 126 41, 130 38, 127 36 Z" fill="#14b8a6" stroke="#c29b38" stroke-width="0.6" opacity="0.9" />
+                
+                <!-- Gold Rumi split-palmettes surrounding the rosette -->
+                <path d="M 52 28 Q 66 16 80 26 Q 66 24 52 28 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
+                <path d="M 52 52 Q 66 64 80 54 Q 66 56 52 52 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
+                <path d="M 108 28 Q 94 16 80 26 Q 94 24 108 28 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
+                <path d="M 108 52 Q 94 64 80 54 Q 94 56 108 52 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
+              </g>
+
+              <!-- Traditional Notched Islamic Cartouche in Center (matching reference perfectly) -->
+              <path d="M 180 12 L 420 12 C 435 12, 435 20, 435 28 C 435 36, 442 40, 446 40 C 442 40, 435 44, 435 52 C 435 60, 435 68, 420 68 L 180 68 C 165 68, 165 60, 165 52 C 165 44, 158 40, 154 40 C 158 40, 165 36, 165 28 C 165 20, 165 12, 180 12 Z" fill="#ffffff" stroke="#c29b38" stroke-width="2.5" />
+              <path d="M 183 15 L 417 15 C 431 15, 431 23, 431 29 C 431 35, 438 39, 442 40 C 438 41, 431 45, 431 51 C 431 57, 431 65, 417 65 L 183 65 C 169 65, 169 57, 169 51 C 169 45, 162 41, 158 40 C 162 39, 169 35, 169 29 C 169 23, 169 15, 183 15 Z" fill="none" stroke="#14b8a6" stroke-width="0.8" stroke-dasharray="3,2" />
+            </svg>
+
+            <!-- Centered Calligraphy Image Overlay (HTML absolute overlays keep native aspect ratio, never squished/gepeng!) -->
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+              <img 
+                v-if="selectedSurahId"
+                :src="`https://cdn.jsdelivr.net/gh/gyenabubakar/surah-name-glyphs@master/svg/${selectedSurahId}.svg`" 
+                :alt="surahInfo?.name_latin" 
+                class="h-[32px] sm:h-[42px] w-auto max-w-[170px] sm:max-w-[230px] object-contain filter select-none pointer-events-none"
+                style="filter: invert(18%) sepia(35%) saturate(2132%) hue-rotate(120deg) brightness(95%) contrast(98%);" 
+              />
             </div>
           </div>
- 
-          <!-- Centered Beautiful Arabic Text Wrap (Tighter Spacing like Mushaf Madinah) -->
-          <div class="text-center leading-[1.22] sm:leading-[1.4] lg:leading-[1.5] select-none">
-            <div class="font-uthmani text-[clamp(1.35rem,3.4dvh,2.5rem)] sm:text-[clamp(1.9rem,5vh,2.5rem)] inline-block text-center w-full" dir="rtl" style="color: #064e3b !important;">
-              <template v-for="ayat in page.ayahs" :key="ayat.id">
-                <!-- Wrapper for Ayah words to support precise scrolling & high-contrast highlights -->
+
+          <!-- 2. Classical Free-Floating Bismillah (Renders only on the first page of a Surah, except Surah At-Tawbah) -->
+          <div 
+            v-if="page.pageNumber === firstPageOfSurah && selectedSurahId !== 9"
+            class="w-full text-center mb-6 sm:mb-8 select-none relative z-10"
+          >
+            <div class="flex items-center justify-center text-center w-full relative" dir="rtl">
+              <!-- Special Interactive Bismillah for Al-Fatihah (Ayah 1 is Bismillah) -->
+              <div v-if="selectedSurahId === 1" class="font-uthmani text-[clamp(1.15rem,4.5vw,2rem)] sm:text-4xl text-[#064e3b] font-bold leading-normal select-none flex items-center justify-center text-center w-full relative z-10" dir="rtl" style="font-family: 'Amiri', serif !important;">
+                <div class="inline-flex items-center justify-center gap-x-1.5 sm:gap-x-2">
+                  <span :id="`ayah-${selectedSurahId}-1`" class="transition-all duration-1000 rounded-xl px-1 py-0.5 inline">
+                    <QuranInteractiveWord 
+                      v-for="word in page.ayahs.find(a => a.ayat_number === 1)?.words" 
+                      :key="word.id" 
+                      :word="word" 
+                    />
+                  </span>
+                  
+                  <!-- Beautifully Aligned Premium Gold/Teal Medallion (1) -->
+                  <span class="relative inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 select-none align-middle cursor-default shrink-0 translate-y-[5px] sm:translate-y-[5px]">
+                    <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full text-[#c29b38] transition-transform duration-300 hover:rotate-45">
+                      <rect x="22" y="22" width="56" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="5" transform="rotate(45 50 50)" />
+                      <rect x="22" y="22" width="56" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="5" />
+                      <circle cx="50" cy="50" r="23" fill="#fdfcf7" stroke="currentColor" stroke-width="2.5" />
+                      <circle cx="50" cy="50" r="19" fill="none" stroke="#064e3b" stroke-width="1.5" stroke-dasharray="3,2.5" />
+                      <circle cx="50" cy="11" r="3.5" fill="#064e3b" />
+                      <circle cx="50" cy="89" r="3.5" fill="#064e3b" />
+                      <circle cx="11" cy="50" r="3.5" fill="#064e3b" />
+                      <circle cx="89" cy="50" r="3.5" fill="#064e3b" />
+                      <circle cx="22.5" cy="22.5" r="3.5" fill="#064e3b" />
+                      <circle cx="77.5" cy="22.5" r="3.5" fill="#064e3b" />
+                      <circle cx="22.5" cy="77.5" r="3.5" fill="#064e3b" />
+                      <circle cx="77.5" cy="77.5" r="3.5" fill="#064e3b" />
+                    </svg>
+                    <span class="relative z-10 text-[9px] sm:text-[10px] font-black text-[#064e3b] select-none flex items-center justify-center leading-none" style="font-family: 'Outfit', sans-serif;">
+                      {{ toArabicNumber(1) }}
+                    </span>
+                  </span>
+                </div>
+              </div>
+              
+              <!-- Static Bismillah for Al-Baqarah and all other Surahs -->
+              <div v-else class="font-uthmani text-[clamp(1.4rem,4.8vw,2.4rem)] sm:text-4xl text-[#064e3b] font-normal leading-normal select-none flex items-center justify-center text-center w-full" style="font-family: 'Amiri', serif !important;">
+                <span>بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Standard Verses Layout (Tighter Spacing like Mushaf Madinah) -->
+          <div class="text-justify leading-[1.22] sm:leading-[1.4] lg:leading-[1.5] select-none relative z-10 pb-8 sm:pb-16" style="text-align: justify; text-justify: inter-word; text-align-last: center;">
+            <div class="font-uthmani text-[clamp(1.35rem,3.4dvh,2.5rem)] sm:text-[clamp(1.9rem,5vh,2.5rem)] inline-block text-justify w-full" dir="rtl" style="color: #064e3b !important; text-align: justify; text-justify: inter-word; text-align-last: center;">
+              <template 
+                v-for="ayat in (selectedSurahId === 1 ? page.ayahs.filter(a => a.ayat_number > 1) : page.ayahs)" 
+                :key="ayat.id"
+              >
+                <!-- Wrapper for Ayah words to support precise scrolling & highlights -->
                 <span :id="`ayah-${selectedSurahId}-${ayat.ayat_number}`" class="transition-all duration-1000 rounded-xl px-[2px] sm:px-1 py-0.5 inline">
                   <QuranInteractiveWord 
                     v-for="word in ayat.words" 
@@ -98,18 +191,13 @@
                   />
                 </span>
                 
-                <!-- Premium Islamic Medallion Ornament (Rotated Overlapping Squares + Accent Dots) -->
-                <span class="relative inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 mx-1.5 sm:mx-2 select-none align-middle cursor-default shrink-0">
+                <!-- Premium Islamic Medallion Ornament -->
+                <span class="relative inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 mx-1.5 sm:mx-2 select-none align-middle cursor-default shrink-0 translate-y-[5px] sm:translate-y-[5px]">
                   <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full text-[#c29b38] transition-transform duration-300 hover:rotate-45">
-                    <!-- Overlapping Rotated Square for Rub el Hizb Star -->
                     <rect x="22" y="22" width="56" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="5" transform="rotate(45 50 50)" />
-                    <!-- Standard Square -->
                     <rect x="22" y="22" width="56" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="5" />
-                    <!-- Inner Gold Border with Warm White Fill -->
                     <circle cx="50" cy="50" r="23" fill="#fdfcf7" stroke="currentColor" stroke-width="2.5" />
-                    <!-- Dotted Emerald Green Inner Orbit -->
                     <circle cx="50" cy="50" r="19" fill="none" stroke="#064e3b" stroke-width="1.5" stroke-dasharray="3,2.5" />
-                    <!-- Premium Emerald Accent Dots on all 8 Points -->
                     <circle cx="50" cy="11" r="3.5" fill="#064e3b" />
                     <circle cx="50" cy="89" r="3.5" fill="#064e3b" />
                     <circle cx="11" cy="50" r="3.5" fill="#064e3b" />
@@ -119,8 +207,7 @@
                     <circle cx="22.5" cy="77.5" r="3.5" fill="#064e3b" />
                     <circle cx="77.5" cy="77.5" r="3.5" fill="#064e3b" />
                   </svg>
-                  <!-- Centered Verse Number -->
-                  <span class="relative z-10 text-[9px] sm:text-[10px] font-black text-[#064e3b] pt-[1px] select-none" style="font-family: 'Outfit', sans-serif;">
+                  <span class="relative z-10 text-[9px] sm:text-[10px] font-black text-[#064e3b] select-none flex items-center justify-center leading-none" style="font-family: 'Outfit', sans-serif;">
                     {{ toArabicNumber(ayat.ayat_number) }}
                   </span>
                 </span>
@@ -137,69 +224,40 @@
         </div>
       </div>
 
-      <!-- Prev & Next Surah Quick Navigation Buttons at Bottom -->
-      <div class="flex justify-between items-center mt-16 pt-8 border-t border-[#e6e2d8] gap-4">
-        <button 
-          v-if="selectedSurahId > 1"
-          @click="changeSurahDirect(-1)"
-          class="flex items-center gap-2 px-5 py-3 rounded-2xl bg-white hover:bg-[#f9fafb] text-[#064e3b] border border-[#e6e2d8] transition-all font-bold text-sm cursor-pointer shadow-sm active:scale-95"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
-          </svg>
-          Surah Sebelumnya
-        </button>
-        <div v-else></div>
+      <!-- Navigation is handled beautifully by the bottom simplified controls dock -->
 
-        <button 
-          v-if="selectedSurahId < 114"
-          @click="changeSurahDirect(1)"
-          class="flex items-center gap-2 px-5 py-3 rounded-2xl bg-white hover:bg-[#f9fafb] text-[#064e3b] border border-[#e6e2d8] transition-all font-bold text-sm cursor-pointer shadow-sm active:scale-95"
-        >
-          Surah Selanjutnya
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      </div>
-
-    </main>
+  </main>
 
     <!-- Bottom Sheet for Tajwid & Sifat -->
     <Transition name="slide-up">
       <div 
         v-if="tahsinStore.isBottomSheetOpen && tahsinStore.activeWord" 
-        class="fixed inset-x-0 bottom-0 z-50 bg-[#fdfcf9] text-[#1f2937] shadow-[0_-15px_50px_rgba(6,78,59,0.15)] rounded-t-3xl border-t-4 border-[#064e3b] transition-transform duration-300 max-h-[85vh] overflow-y-auto"
+        class="fixed inset-x-0 bottom-0 z-50 bg-[#fdfcf9] text-[#1f2937] shadow-[0_-15px_50px_rgba(6,78,59,0.15)] rounded-t-3xl border-t-4 border-[#064e3b] transition-transform duration-300 max-h-[85vh] flex flex-col overflow-hidden"
       >
-        <!-- Close Button (Absolute positioning for premium neat look) -->
-        <button 
-          @click="tahsinStore.closeBottomSheet" 
-          class="absolute top-4 right-4 sm:top-6 sm:right-6 p-2.5 bg-[#f3f4f6] text-[#064e3b] border border-[#e5e7eb] rounded-full hover:bg-[#e5e7eb] active:scale-95 transition-all shadow-md cursor-pointer z-20"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-
-        <div class="p-6 sm:p-8 max-w-4xl mx-auto">
+        <!-- Sticky Header (Only Pins the Arabic Word box at the top of the scrollable content) -->
+        <div class="sticky top-0 bg-[#fdfcf9] z-20 px-6 sm:px-8 pt-4 pb-3 border-b border-[#e5e7eb] shrink-0 w-full shadow-[0_4px_12px_rgba(0,0,0,0.02)] flex flex-col items-center">
           <!-- Grab Handle -->
-          <div class="w-16 h-1.5 bg-[#e2ded5] rounded-full mx-auto mb-6"></div>
+          <div class="w-16 h-1.5 bg-[#e2ded5] rounded-full mx-auto mb-3"></div>
           
-          <div class="mb-8 border-b border-[#e5e7eb] pb-6 pr-8">
-            <div class="flex flex-col sm:flex-row sm:items-center gap-4">
-              <div class="bg-[#064e3b]/5 border border-[#064e3b]/10 rounded-2xl px-6 py-4 flex items-center justify-center shadow-inner min-w-[140px] min-h-[76px] overflow-visible">
-                <h3 class="text-3xl sm:text-4xl font-uthmani text-[#064e3b] leading-normal select-all" dir="rtl" style="font-family: 'Amiri', serif !important;">
-                  {{ tahsinStore.activeWord.text_arabic }}
-                </h3>
-              </div>
-              <div class="flex flex-col gap-1">
-                <span class="text-[10px] font-extrabold text-[#064e3b] uppercase tracking-wider bg-[#d4af37]/15 text-[#8a6d1c] px-2.5 py-1 rounded-lg border border-[#d4af37]/35 w-max">Analisis Kata</span>
-                <p class="text-[#4b5563] text-xs sm:text-sm">Bedah hukum tajwid dan sifat huruf hijaiyah pembentuk kata.</p>
-              </div>
-            </div>
+          <div class="bg-[#064e3b]/5 border border-[#064e3b]/10 rounded-2xl px-6 sm:px-8 py-3.5 sm:py-4.5 flex items-center justify-center shadow-inner min-w-[140px] shrink-0 select-all overflow-visible">
+            <h3 class="text-3xl sm:text-4xl font-uthmani text-[#064e3b] leading-[1.4] text-center overflow-visible transform translate-y-[6px] sm:translate-y-[7px]" dir="rtl" style="font-family: 'Amiri', serif !important;">
+              {{ tahsinStore.activeWord.text_arabic }}
+            </h3>
           </div>
+        </div>
 
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Scrollable Content Body -->
+        <div class="overflow-y-auto flex-1 p-6 sm:p-8 scrollbar-hide">
+          <div class="max-w-4xl mx-auto">
+            <!-- Metadata Badge & Description (Scrolls away naturally) -->
+            <div class="mb-6 pb-6 border-b border-[#e5e7eb] flex flex-col gap-2">
+              <div class="flex items-center gap-2">
+                <span class="text-[9px] font-extrabold text-[#064e3b] uppercase tracking-wider bg-[#d4af37]/15 text-[#8a6d1c] px-2.5 py-0.5 rounded-lg border border-[#d4af37]/35 w-max">Analisis Kata</span>
+              </div>
+              <p class="text-[#4b5563] text-xs sm:text-sm">Bedah hukum tajwid dan sifat huruf hijaiyah pembentuk kata.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <!-- Tajwid Analysis -->
             <div class="lg:col-span-5">
               <h4 class="text-xs font-extrabold text-[#064e3b] uppercase tracking-widest mb-4 flex items-center gap-2">
@@ -318,9 +376,10 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </Transition>
+        </div> <!-- Closing max-w-4xl mx-auto -->
+      </div> <!-- Closing overflow-y-auto flex-1 p-6 sm:p-8 scrollbar-hide -->
+    </div> <!-- Closing Bottom Sheet Outer Container -->
+  </Transition>
     
     <!-- Backdrop -->
     <Transition name="fade">
@@ -338,15 +397,16 @@
         <div @click="isNavModalOpen = false" class="absolute inset-0 bg-black/75 backdrop-blur-md"></div>
         
         <!-- Modal Card -->
-        <div class="bg-[#fdfcf9] border border-[#e6e2d8] rounded-3xl w-full max-w-md overflow-hidden shadow-2xl relative z-10 transform scale-100 transition-all duration-300">
+        <div class="rounded-2xl w-full max-w-md overflow-hidden shadow-2xl relative z-10 transform scale-100 transition-all duration-300">
           <!-- Modal Header -->
           <div class="px-6 py-5 bg-[#064e3b] text-white">
             <h3 class="text-lg font-bold text-[#fdfaf3] flex items-center gap-2">
               <span>Navigasi Al-Qur'an</span>
             </h3>
           </div>
-          
-          <!-- Tabs Navigation -->
+
+          <div class="bg-[#fdfcf9] ">
+ <!-- Tabs Navigation -->
           <div class="flex border-b border-[#e6e2d8] bg-[#f3f4f6]">
             <button 
               @click="activeNavTab = 'surah'" 
@@ -456,7 +516,50 @@
               Oke
             </button>
           </div>
+
+          </div>
+          
+         
         </div>
+      </div>
+    </Transition>
+
+    <!-- Bottom Floating Dock on Mobile (Clean E-Reader Controls) -->
+    <Transition name="slide-up">
+      <div 
+        v-if="isControlsVisible && !tahsinStore.isBottomSheetOpen"
+        class="fixed bottom-4 inset-x-4 z-40 sm:hidden bg-[#064e3b]/95 backdrop-blur-md border border-[#0d7d60]/60 rounded-2xl p-3 flex items-center justify-between gap-3 shadow-[0_10px_35px_rgba(6,78,59,0.35)]"
+      >
+        <!-- Back Button -->
+        <NuxtLink to="/" class="p-2 rounded-xl bg-[#0b5e47] hover:bg-[#0c6b52] text-[#fdfaf3] border border-[#0d7d60] flex items-center justify-center cursor-pointer shadow-md active:scale-95 transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+        </NuxtLink>
+
+        <!-- Surah Selection (Simplified) -->
+        <button 
+          @click="isNavModalOpen = true" 
+          class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-[#0b5e47] border border-[#0d7d60] hover:border-[#d4af37]/60 text-[#fdfaf3] rounded-xl focus:outline-none transition-all cursor-pointer shadow-md text-xs font-extrabold active:scale-95"
+        >
+          <span>{{ surahInfo?.name_latin || 'Memuat...' }}</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-[#d4af37]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7" />
+          </svg>
+        </button>
+
+        <!-- Tajwid Toggle -->
+        <button 
+          @click="tahsinStore.toggleTajwidColors()"
+          class="flex items-center justify-center w-9 h-9 rounded-xl transition-all border cursor-pointer shadow-md shrink-0 active:scale-95"
+          :class="tahsinStore.showTajwidColors 
+            ? 'bg-[#d4af37] text-[#064e3b] border-[#d4af37]' 
+            : 'bg-[#0b5e47] text-[#d4af37] border-[#0d7d60]'"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+          </svg>
+        </button>
       </div>
     </Transition>
 
@@ -505,6 +608,26 @@ const surahPages = ref([])
 const firstPageOfSurah = computed(() => {
   return surahPages.value.length > 0 ? surahPages.value[0].pageNumber : null
 })
+
+// Scroll Container Ref binding
+const scrollContainer = ref(null)
+
+// Reading controls visibility (Full Screen Mode)
+const isControlsVisible = ref(true)
+
+const toggleControls = (e) => {
+  // Prevent toggle if clicking interactive words, buttons, links, active bottom sheets, or navigation modals
+  if (
+    e.target.closest('.interactive-word-wrapper') ||
+    e.target.closest('button') ||
+    e.target.closest('a') ||
+    e.target.closest('.fixed') ||
+    e.target.closest('.z-40') ||
+    e.target.closest('.z-50')
+  ) return
+  
+  isControlsVisible.value = !isControlsVisible.value
+}
 
 // Page & Juz Tracking via Scroll Observer
 const currentPageNum = ref(1)

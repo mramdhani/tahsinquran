@@ -1,7 +1,7 @@
 <template>
   <span 
     @click="tahsinStore.setActiveWord(word)"
-    class="word-interactive font-uthmani inline-block align-middle leading-none transition-all hover:scale-105 duration-150 mx-[1px] sm:mx-[2px] px-0.5 sm:px-1 py-[2px] sm:py-1 rounded cursor-pointer select-none"
+    class="word-interactive font-uthmani inline-flex items-center justify-center align-middle leading-normal transition-all hover:scale-105 duration-150 mx-[1px] sm:mx-[2px] px-1 sm:px-1.5 py-1.5 sm:py-2.5 rounded cursor-pointer select-none"
     :class="isActive 
       ? 'bg-[#d4af37]/20 border border-[#d4af37] text-[#064e3b] font-bold shadow-sm' 
       : 'text-[#064e3b] hover:text-[#d4af37]'"

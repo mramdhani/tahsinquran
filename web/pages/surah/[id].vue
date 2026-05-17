@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-[#fdfcf9] text-[#1f2937] pb-24 font-sans select-none relative">
     
     <!-- Top Floating Header Bar (Elegant Emerald & Gold Theme) -->
-    <header class="sticky top-0 bg-[#064e3b]/95 backdrop-blur-md border-b border-[#053e2f] px-4 py-3.5 shadow-xl z-30 flex items-center justify-between gap-3">
+    <header class="sticky top-0 bg-[#064e3b]/95 backdrop-blur-md border-b border-[#053e2f] px-4 py-3.5 shadow-xl z-30 flex items-center justify-between gap-3 relative">
       <!-- Back Button -->
       <NuxtLink to="/" class="p-2 rounded-xl bg-[#0b5e47] hover:bg-[#0c6b52] text-[#fdfaf3] border border-[#0d7d60] transition-all flex items-center justify-center cursor-pointer shadow-md active:scale-95">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -10,13 +10,12 @@
         </svg>
       </NuxtLink>
 
-      <!-- Unified Location Pill (Comfortable Filtering Dialog) -->
+      <!-- Unified Location Pill (Comfortable Filtering Dialog) - Absolutely Centered -->
       <button 
         @click="isNavModalOpen = true" 
-        class="flex items-center gap-2 px-3 sm:px-4 py-2 bg-[#0b5e47] border border-[#0d7d60] hover:border-[#d4af37]/60 text-[#fdfaf3] rounded-2xl focus:outline-none transition-all cursor-pointer shadow-md text-xs sm:text-sm font-bold active:scale-95 hover:bg-[#0c6b52]"
+        class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 px-3 sm:px-4 py-2 bg-[#0b5e47] border border-[#0d7d60] hover:border-[#d4af37]/60 text-[#fdfaf3] rounded-2xl focus:outline-none transition-all cursor-pointer shadow-md text-xs sm:text-sm font-bold active:scale-95 hover:bg-[#0c6b52] z-10"
       >
-        <span class="text-[#d4af37] text-xs sm:text-sm">📍</span>
-        <span class="max-w-[150px] sm:max-w-none truncate">Hal: {{ currentPageNum }} • Juz: {{ currentJuzNum }} • {{ surahInfo?.name_latin || 'Memuat...' }}</span>
+        <span class="max-w-[140px] sm:max-w-none truncate">Hal: {{ currentPageNum }} • Juz: {{ currentJuzNum }} • {{ surahInfo?.name_latin || 'Memuat...' }}</span>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#d4af37] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
         </svg>
@@ -26,25 +25,24 @@
       <div class="flex items-center gap-2">
         <button 
           @click="tahsinStore.toggleTajwidColors()"
-          class="flex items-center gap-1.5 px-3 py-2 rounded-xl transition-all text-xs font-bold border cursor-pointer active:scale-95 shadow-md"
+          class="flex items-center justify-center w-9 h-9 md:w-auto md:px-3.5 md:py-2 rounded-xl transition-all text-xs font-bold border cursor-pointer active:scale-95 shadow-md shrink-0"
           :class="tahsinStore.showTajwidColors 
             ? 'bg-[#d4af37] text-[#064e3b] border-[#d4af37] hover:bg-[#e8c352]' 
             : 'bg-[#0b5e47] text-[#d4af37] border-[#0d7d60] hover:bg-[#0c6b52]'"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
           </svg>
-          <span class="hidden md:inline">{{ tahsinStore.showTajwidColors ? 'Tajwid: Berwarna' : 'Tajwid: Polos' }}</span>
-          <span class="md:hidden">{{ tahsinStore.showTajwidColors ? 'Warna' : 'Polos' }}</span>
+          <span class="hidden md:inline ml-1.5">{{ tahsinStore.showTajwidColors ? 'Tajwid: Berwarna' : 'Tajwid: Polos' }}</span>
         </button>
       </div>
     </header>
 
-    <!-- Main Content Reader Container -->
-    <main class="max-w-3xl mx-auto px-6 py-12 relative z-10">
+    <!-- Main Content Reader Container (Optimized widths & paddings for mobile) -->
+    <main class="max-w-3xl mx-auto px-0 sm:px-6 py-4 sm:py-12 relative z-10">
       
-      <!-- Top Surah Banner Card (Sleek Emerald Glass Design) -->
-      <div class="bg-[#064e3b] border border-[#053e2f] rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 w-full shadow-lg mb-12">
+      <!-- Top Surah Banner Card (Sleek Emerald Glass Design) - HIDE ON MOBILE TO SAVE SPACE -->
+      <div class="hidden sm:flex bg-[#064e3b] border border-[#053e2f] rounded-3xl p-6 sm:p-8 flex-col md:flex-row items-center justify-between gap-6 w-full shadow-lg mb-12">
         <!-- Calligraphy (Left side) -->
         <div class="h-20 sm:h-24 md:h-28 flex items-center justify-center shrink-0">
           <img 
@@ -75,25 +73,22 @@
           v-for="page in surahPages" 
           :key="page.pageNumber"
           :id="`page-block-${page.pageNumber}`"
-          class="relative bg-white border border-[#e6e2d8] rounded-[2.5rem] p-8 sm:p-12 mb-10 shadow-md overflow-hidden"
+          class="relative bg-white border-0 sm:border border-[#e6e2d8] rounded-none sm:rounded-[2.5rem] px-4 py-8 sm:p-12 mb-6 sm:mb-10 shadow-none sm:shadow-md overflow-hidden"
         >
           
-          <!-- Bismillah Header (Centered Calligraphy + Translation) -->
+          <!-- Bismillah Header (Centered Calligraphy Only) -->
           <div 
             v-if="page.pageNumber === firstPageOfSurah && selectedSurahId !== 1 && selectedSurahId !== 9" 
-            class="text-center mb-12 flex flex-col items-center gap-3"
+            class="text-center mb-8 flex flex-col items-center gap-3"
           >
-            <div class="font-uthmani text-3xl sm:text-4xl text-[#0a3625] leading-normal select-none py-2" dir="rtl">
+            <div class="font-uthmani text-3xl sm:text-4xl text-[#064e3b] leading-normal select-none py-2" dir="rtl">
               بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
-            </div>
-            <div class="text-xs text-[#6b7280] italic tracking-wide">
-              In the Name of Allah—the Most Compassionate, Most Merciful
             </div>
           </div>
 
-          <!-- Centered Beautiful Arabic Text Wrap -->
-          <div class="text-center leading-[1.8] sm:leading-[2.0] lg:leading-[2.2] select-none">
-            <div class="font-uthmani text-[clamp(1.4rem,4.2vh,2.3rem)] inline-block text-center w-full" dir="rtl" style="color: #064e3b !important;">
+          <!-- Centered Beautiful Arabic Text Wrap (Tighter Spacing like Mushaf Madinah) -->
+          <div class="text-center leading-[1.3] sm:leading-[1.4] lg:leading-[1.5] select-none">
+            <div class="font-uthmani text-[clamp(1.9rem,5vh,2.5rem)] inline-block text-center w-full" dir="rtl" style="color: #064e3b !important;">
               <template v-for="ayat in page.ayahs" :key="ayat.id">
                 <!-- Wrapper for Ayah words to support precise scrolling & high-contrast highlights -->
                 <span :id="`ayah-${selectedSurahId}-${ayat.ayat_number}`" class="transition-all duration-1000 rounded-xl px-1 py-0.5 inline">
@@ -153,40 +148,58 @@
     <Transition name="slide-up">
       <div 
         v-if="tahsinStore.isBottomSheetOpen && tahsinStore.activeWord" 
-        class="fixed inset-x-0 bottom-0 z-50 bg-[#fdfcf9] text-[#1f2937] shadow-[0_-15px_50px_rgba(6,78,59,0.15)] rounded-t-[2.5rem] border-t-4 border-[#064e3b] transition-transform duration-300 max-h-[85vh] overflow-y-auto"
+        class="fixed inset-x-0 bottom-0 z-50 bg-[#fdfcf9] text-[#1f2937] shadow-[0_-15px_50px_rgba(6,78,59,0.15)] rounded-t-3xl border-t-4 border-[#064e3b] transition-transform duration-300 max-h-[85vh] overflow-y-auto"
       >
+        <!-- Close Button (Absolute positioning for premium neat look) -->
+        <button 
+          @click="tahsinStore.closeBottomSheet" 
+          class="absolute top-4 right-4 sm:top-6 sm:right-6 p-2.5 bg-[#f3f4f6] text-[#064e3b] border border-[#e5e7eb] rounded-full hover:bg-[#e5e7eb] active:scale-95 transition-all shadow-md cursor-pointer z-20"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
         <div class="p-6 sm:p-8 max-w-4xl mx-auto">
           <!-- Grab Handle -->
-          <div class="w-16 h-1.5 bg-[#d1fae5] rounded-full mx-auto mb-8"></div>
+          <div class="w-16 h-1.5 bg-[#e2ded5] rounded-full mx-auto mb-6"></div>
           
-          <div class="flex justify-between items-start mb-8 border-b border-[#e5e7eb] pb-5">
-            <div>
-              <h3 class="text-5xl font-uthmani text-[#064e3b] mb-3 leading-tight" dir="rtl">
-                {{ tahsinStore.activeWord.text_arabic }}
-              </h3>
-              <p class="text-[#4b5563] text-sm">Analisis hukum tajwid kata dan bedah sifat huruf per huruf hijaiyah.</p>
+          <div class="mb-8 border-b border-[#e5e7eb] pb-6 pr-8">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+              <div class="bg-[#064e3b]/5 border border-[#064e3b]/10 rounded-2xl px-6 py-3.5 flex items-center justify-center shadow-inner max-w-max">
+                <h3 class="text-4xl sm:text-5xl font-uthmani text-[#064e3b] leading-tight select-all" dir="rtl" style="font-family: 'Amiri', serif !important;">
+                  {{ tahsinStore.activeWord.text_arabic }}
+                </h3>
+              </div>
+              <div class="flex flex-col gap-1">
+                <span class="text-[10px] font-extrabold text-[#064e3b] uppercase tracking-wider bg-[#d4af37]/15 text-[#8a6d1c] px-2.5 py-1 rounded-lg border border-[#d4af37]/35 w-max">Analisis Kata</span>
+                <p class="text-[#4b5563] text-xs sm:text-sm">Bedah hukum tajwid dan sifat huruf hijaiyah pembentuk kata.</p>
+              </div>
             </div>
-            <button @click="tahsinStore.closeBottomSheet" class="p-3 bg-[#f3f4f6] text-[#064e3b] border border-[#e5e7eb] rounded-full hover:bg-[#e5e7eb] active:scale-95 transition-all shadow-md cursor-pointer">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <!-- Tajwid Analysis -->
             <div class="lg:col-span-5">
-              <h4 class="text-xs font-bold text-[#064e3b] uppercase tracking-widest mb-4">Hukum Tajwid Terdeteksi</h4>
+              <h4 class="text-xs font-extrabold text-[#064e3b] uppercase tracking-widest mb-4 flex items-center gap-2">
+                <span class="w-1.5 h-3 bg-[#d4af37] rounded-full"></span>
+                Hukum Tajwid Terdeteksi
+              </h4>
               <div v-if="tahsinStore.activeWord.tajwids?.length" class="space-y-4">
-                <div v-for="tajwid in tahsinStore.activeWord.tajwids" :key="tajwid.id" class="bg-white rounded-2xl p-5 border border-[#e5e7eb] shadow-sm hover:border-[#064e3b]/30 transition-all">
+                <div 
+                  v-for="tajwid in tahsinStore.activeWord.tajwids" 
+                  :key="tajwid.id" 
+                  class="bg-white rounded-2xl p-5 border border-[#e5e7eb] border-l-4 shadow-sm hover:border-[#064e3b]/30 transition-all duration-300"
+                  :style="{ borderLeftColor: tajwid.color_code }"
+                >
                   <div class="flex items-center gap-3 mb-3">
-                    <span class="w-4 h-4 rounded-full shadow-inner" :style="{ backgroundColor: tajwid.color_code }"></span>
-                    <span class="font-bold text-[#1f2937] text-lg">{{ tajwid.name }}</span>
+                    <span class="w-3.5 h-3.5 rounded-full shadow-inner" :style="{ backgroundColor: tajwid.color_code }"></span>
+                    <span class="font-bold text-[#1f2937] text-base">{{ tajwid.name }}</span>
                   </div>
-                  <p class="text-[#4b5563] text-sm leading-relaxed mb-3">{{ tajwid.description }}</p>
+                  <p class="text-[#4b5563] text-xs leading-relaxed mb-3">{{ tajwid.description }}</p>
                   <div v-if="tajwid.example_arabic" class="flex justify-between items-center bg-[#f9fafb] px-4 py-2.5 rounded-xl border border-[#e5e7eb]">
                     <span class="text-xs text-[#6b7280] font-bold">Contoh:</span>
-                    <span class="font-uthmani text-xl text-[#064e3b]" dir="rtl">{{ tajwid.example_arabic }}</span>
+                    <span class="font-uthmani text-xl text-[#064e3b]" dir="rtl" style="font-family: 'Amiri', serif !important;">{{ tajwid.example_arabic }}</span>
                   </div>
                 </div>
               </div>
@@ -197,9 +210,12 @@
 
             <!-- Sifat Huruf Analysis -->
             <div class="lg:col-span-7">
-              <h4 class="text-xs font-bold text-[#064e3b] uppercase tracking-widest mb-4">Bedah Sifat Huruf Hijaiyah</h4>
+              <h4 class="text-xs font-extrabold text-[#064e3b] uppercase tracking-widest mb-4 flex items-center gap-2">
+                <span class="w-1.5 h-3 bg-[#d4af37] rounded-full"></span>
+                Bedah Sifat Huruf Hijaiyah
+              </h4>
               <div v-if="tahsinStore.activeWord.sifatHurufs?.length" class="space-y-6">
-                <!-- Interactive Letter Buttons (Centered and Standard Font for maximum dots visibility) -->
+                <!-- Interactive Letter Buttons -->
                 <div class="flex flex-wrap justify-center gap-3 bg-white p-3.5 rounded-2xl border border-[#e5e7eb]" dir="rtl">
                   <button 
                     v-for="(letterAnalysis, idx) in tahsinStore.activeWord.sifatHurufs" 
@@ -207,8 +223,8 @@
                     @click="selectedLetterIdx = idx"
                     class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl border transition-all active:scale-95 cursor-pointer font-extrabold select-none"
                     :class="selectedLetterIdx === idx 
-                      ? 'bg-[#064e3b] text-white border-[#064e3b] shadow-lg font-black' 
-                      : 'bg-[#f9fafb] text-[#064e3b] border-[#e5e7eb] hover:bg-[#f3f4f6]'"
+                      ? 'bg-[#064e3b] text-[#fdfaf3] border-[#d4af37] ring-2 ring-[#d4af37]/35 shadow-lg font-black' 
+                      : 'bg-[#f9fafb] text-[#064e3b] border-[#e5e7eb] hover:bg-[#0c6b52]/10 hover:border-[#064e3b]/30'"
                     style="font-family: 'Amiri', serif !important;"
                   >
                     {{ letterAnalysis.letter }}
@@ -218,24 +234,24 @@
                 <!-- Selected Letter properties -->
                 <div v-if="activeLetterInfo" class="bg-white rounded-2xl p-5 border border-[#e5e7eb] shadow-sm transition-all duration-300">
                   <div class="flex justify-between items-center border-b border-[#e5e7eb] pb-3 mb-4">
-                    <span class="text-[#064e3b] font-extrabold text-lg flex items-center gap-2.5">
-                      Huruf 
-                      <span class="text-3xl font-bold bg-[#f9fafb] px-4 py-1.5 rounded-xl border border-[#e5e7eb] text-[#0a3625]" style="font-family: 'Amiri', serif !important;">
+                    <span class="text-[#064e3b] font-extrabold text-sm flex items-center gap-2.5">
+                      Sifat Huruf 
+                      <span class="text-2xl font-bold bg-[#f9fafb] px-4 py-1.5 rounded-xl border border-[#e5e7eb] text-[#0a3625]" style="font-family: 'Amiri', serif !important;">
                         {{ activeLetterInfo.letter }}
                       </span>
-                      <span class="text-sm text-[#4b5563] font-semibold">({{ activeLetterInfo.name }})</span>
+                      <span class="text-xs text-[#4b5563] font-bold">({{ activeLetterInfo.name }})</span>
                     </span>
                   </div>
 
                   <div class="space-y-4">
                     <!-- Sifat Memiliki Lawan -->
                     <div>
-                      <h5 class="text-xs font-bold text-[#4b5563] uppercase tracking-wider mb-2.5">Sifat yang Memiliki Lawan</h5>
+                      <h5 class="text-[10px] font-extrabold text-[#4b5563] uppercase tracking-wider mb-2.5">Sifat yang Memiliki Lawan</h5>
                       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div 
                           v-for="s in activeLetterInfo.sifat.filter(x => x.type === 'Berlawanan')" 
                           :key="s.name"
-                          class="bg-[#f9fafb] text-[#1f2937] border border-[#e5e7eb] rounded-xl p-3 text-xs flex flex-col gap-1 shadow-sm"
+                          class="bg-[#059669]/5 text-[#1f2937] border-l-2 border-[#059669] rounded-xl p-3 text-xs flex flex-col gap-1 shadow-sm"
                         >
                           <span class="font-extrabold text-[#064e3b] flex items-center justify-between gap-1">
                             <span>{{ s.name }}</span>
@@ -251,16 +267,16 @@
 
                     <!-- Sifat Khusus (Tanpa Lawan) -->
                     <div v-if="activeLetterInfo.sifat.some(x => x.type === 'Tanpa Lawan')">
-                      <h5 class="text-xs font-bold text-[#4b5563] uppercase tracking-wider mb-2.5 mt-2">Sifat Khusus (Tanpa Lawan)</h5>
+                      <h5 class="text-[10px] font-extrabold text-[#4b5563] uppercase tracking-wider mb-2.5 mt-2">Sifat Khusus (Tanpa Lawan)</h5>
                       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div 
                           v-for="s in activeLetterInfo.sifat.filter(x => x.type === 'Tanpa Lawan')" 
                           :key="s.name"
-                          class="bg-[#f9fafb] text-[#1f2937] border border-[#e5e7eb] rounded-xl p-3 text-xs flex flex-col gap-1 shadow-sm"
+                          class="bg-[#d4af37]/5 text-[#1f2937] border-l-2 border-[#d4af37] rounded-xl p-3 text-xs flex flex-col gap-1 shadow-sm"
                         >
                           <span class="font-extrabold text-[#064e3b] flex items-center justify-between gap-1">
                             <span>{{ s.name }}</span>
-                            <span class="text-base font-bold text-[#059669]" style="font-family: 'Amiri', serif !important;">{{ s.name_arabic }}</span>
+                            <span class="text-base font-bold text-[#c29b38]" style="font-family: 'Amiri', serif !important;">{{ s.name_arabic }}</span>
                           </span>
                           <span class="text-[#4b5563] text-[10px] leading-relaxed">{{ s.description }}</span>
                         </div>
@@ -599,7 +615,8 @@ const fetchSurah = async (pageNumToScroll = null) => {
         const wordsText = text.split(' ').filter(w => w.trim() !== '');
         const words = wordsText.map((w, index) => {
           const isLastWord = index === wordsText.length - 1;
-          const tajwids = analyzeWordTajwid(w, isLastWord);
+          const nextWord = isLastWord ? null : wordsText[index + 1];
+          const tajwids = analyzeWordTajwid(w, nextWord, isLastWord);
           
           const plainLetters = getPlainArabicLetters(w);
           const sifatHurufs = plainLetters.map(char => analyzeLetter(char)).filter(x => x !== null);
@@ -667,6 +684,7 @@ const jumpToPage = async (pageNum) => {
 }
 
 const scrollToPage = (pageNum) => {
+  if (typeof document === 'undefined') return
   const el = document.getElementById(`page-block-${pageNum}`)
   if (el) {
     el.scrollIntoView({ behavior: 'smooth', block: 'start' })

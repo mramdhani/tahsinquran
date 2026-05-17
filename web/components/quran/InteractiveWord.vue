@@ -25,7 +25,7 @@ const props = defineProps({
 const tahsinStore = useTahsinStore()
 
 const wordHasTajwid = computed(() => {
-  return props.word.tajwids && props.word.tajwids.length > 0
+  return props.word.tajwids && props.word.tajwids.length > 0 && props.word.tajwids[0].id !== 'lafadz_standar'
 })
 
 const isActive = computed(() => {

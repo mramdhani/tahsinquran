@@ -40,24 +40,27 @@
     </header>
 
     <!-- Main Content Reader Container (Optimized widths & paddings for mobile) -->
-    <main class="max-w-3xl mx-auto px-0 sm:px-6 py-4 sm:py-12 relative z-10">
+    <main class="max-w-[530px] mx-auto px-0 sm:px-6 py-4 sm:py-12 relative z-10">
       
-      <!-- Scrollable Quran Pages Stack (Horizontal Swipe on Mobile / Natural Scroll on Desktop) -->
       <div 
         ref="scrollContainer"
-        class="flex flex-row sm:flex-col overflow-x-auto sm:overflow-x-visible scrollbar-hide w-full sm:space-y-12 md:space-y-16 snap-x snap-mandatory"
+        class="flex flex-row sm:flex-col overflow-x-auto sm:overflow-x-visible scrollbar-hide w-full gap-4 sm:gap-0 sm:space-y-4 md:space-y-6 snap-x snap-mandatory"
+        dir="rtl"
       >
         <div 
           v-for="page in surahPages" 
           :key="page.pageNumber"
           :id="`page-block-${page.pageNumber}`"
           @click="toggleControls"
-          class="relative w-full sm:w-auto shrink-0 snap-center snap-always bg-[#fdfcf7] rounded-none px-4 py-6 sm:p-12 mb-4 sm:mb-10 overflow-hidden flex flex-col min-h-[500px] border-r border-[#e6e2d8] last:border-r-0 sm:border-r-0 sm:border-b sm:border-[#e6e2d8] sm:last:border-b-0 cursor-pointer"
+          :style="getPageStyle(page)"
+          class="relative w-full sm:w-auto shrink-0 snap-center snap-always bg-[#fdfcf7] rounded-none px-4 pt-2 pb-2 sm:px-8 sm:pt-4 sm:pb-4 mb-2 sm:mb-4 h-[calc(100dvh-80px)] sm:h-auto overflow-y-hidden sm:overflow-y-visible flex flex-col border-r border-[#e6e2d8] last:border-r-0 sm:border-r-0 sm:border-b sm:border-[#e6e2d8] sm:last:border-b-0 cursor-pointer"
         >
-          <!-- 1. Elegant Integrated Surah Plate (Renders only at the top of the first page of the Surah) -->
-          <div 
+          <!-- Wrapper container that centers Surah Plate, Bismillah, and Verses together vertically on the card -->
+          <div class="flex-1 flex flex-col justify-center w-full min-h-0">
+            <!-- 1. Elegant Integrated Surah Plate (Renders only at the top of the first page of the Surah) -->
+            <div 
             v-if="page.pageNumber === firstPageOfSurah"
-            class="w-[calc(100%+2rem)] sm:w-[calc(100%+6rem)] border-b-[3px] border-[#c29b38] bg-[#ffffff] py-4 sm:py-6 px-0 mx-[-1rem] sm:mx-[-3rem] mt-[-1.5rem] sm:mt-[-3rem] mb-6 sm:mb-8 rounded-t-none sm:rounded-t-[2.4rem] relative overflow-hidden flex flex-col items-center justify-center select-none min-h-[80px] sm:min-h-[105px] z-10"
+            class="w-full sm:w-[calc(100%+4rem)] bg-[#ffffff] py-2 sm:py-6 px-0 mx-0 sm:mx-[-2rem] mt-[-0.5rem] sm:mt-[-1rem] mb-3 sm:mb-8 rounded-none relative overflow-hidden flex flex-col items-center justify-center select-none min-h-[60px] sm:min-h-[105px] z-10"
           >
             <!-- SVG containing the magnificent seamless Islamic patterns & central cartouche -->
             <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 600 80" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -128,10 +131,9 @@
             </div>
           </div>
 
-          <!-- 2. Classical Free-Floating Bismillah (Renders only on the first page of a Surah, except Surah At-Tawbah) -->
           <div 
             v-if="page.pageNumber === firstPageOfSurah && selectedSurahId !== 9"
-            class="w-full text-center mb-6 sm:mb-8 select-none relative z-10"
+            class="w-full text-center mb-3 sm:mb-8 select-none relative z-10"
           >
             <div class="flex items-center justify-center text-center w-full relative" dir="rtl">
               <!-- Special Interactive Bismillah for Al-Fatihah (Ayah 1 is Bismillah) -->
@@ -168,58 +170,48 @@
                 </div>
               </div>
               
-              <!-- Static Bismillah for Al-Baqarah and all other Surahs -->
-              <div v-else class="font-uthmani text-[clamp(1.4rem,4.8vw,2.4rem)] sm:text-4xl text-[#064e3b] font-normal leading-normal select-none flex items-center justify-center text-center w-full" style="font-family: 'Amiri', serif !important;">
+              <div v-else class="font-uthmani text-[clamp(1.2rem,4vw,2rem)] sm:text-4xl text-[#064e3b] font-normal leading-normal select-none flex items-center justify-center text-center w-full" style="font-family: 'Amiri', serif !important;">
                 <span>بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</span>
               </div>
             </div>
           </div>
 
-          <!-- 3. Standard Verses Layout (Tighter Spacing like Mushaf Madinah) -->
-          <div class="text-justify leading-[1.22] sm:leading-[1.4] lg:leading-[1.5] select-none relative z-10 pb-8 sm:pb-16" style="text-align: justify; text-justify: inter-word; text-align-last: center;">
-            <div class="font-uthmani text-[clamp(1.35rem,3.4dvh,2.5rem)] sm:text-[clamp(1.9rem,5vh,2.5rem)] inline-block text-justify w-full" dir="rtl" style="color: #064e3b !important; text-align: justify; text-justify: inter-word; text-align-last: center;">
+          <div class="text-justify leading-[1.12] sm:leading-[1.4] lg:leading-[1.5] select-none relative z-10 pb-3 sm:pb-4 w-full" style="text-align: justify; text-justify: auto; text-align-last: center;">
+            <div class="font-uthmani block text-justify w-full" dir="rtl" style="color: #064e3b !important; text-align: justify; text-justify: inter-word; text-align-last: center; word-spacing: -0.09em;">
               <template 
                 v-for="ayat in (selectedSurahId === 1 ? page.ayahs.filter(a => a.ayat_number > 1) : page.ayahs)" 
                 :key="ayat.id"
               >
-                <!-- Wrapper for Ayah words to support precise scrolling & highlights -->
+                <!-- Wrapper for Ayah words to support precise scrolling & highlights (with integrated medallion) -->
                 <span :id="`ayah-${selectedSurahId}-${ayat.ayat_number}`" class="transition-all duration-1000 rounded-xl px-[2px] sm:px-1 py-0.5 inline">
-                  <QuranInteractiveWord 
-                    v-for="word in ayat.words" 
-                    :key="word.id" 
-                    :word="word" 
-                  />
-                </span>
-                
-                <!-- Premium Islamic Medallion Ornament -->
-                <span class="relative inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 mx-1.5 sm:mx-2 select-none align-middle cursor-default shrink-0 translate-y-[5px] sm:translate-y-[5px]">
-                  <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full text-[#c29b38] transition-transform duration-300 hover:rotate-45">
-                    <rect x="22" y="22" width="56" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="5" transform="rotate(45 50 50)" />
-                    <rect x="22" y="22" width="56" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="5" />
-                    <circle cx="50" cy="50" r="23" fill="#fdfcf7" stroke="currentColor" stroke-width="2.5" />
-                    <circle cx="50" cy="50" r="19" fill="none" stroke="#064e3b" stroke-width="1.5" stroke-dasharray="3,2.5" />
-                    <circle cx="50" cy="11" r="3.5" fill="#064e3b" />
-                    <circle cx="50" cy="89" r="3.5" fill="#064e3b" />
-                    <circle cx="11" cy="50" r="3.5" fill="#064e3b" />
-                    <circle cx="89" cy="50" r="3.5" fill="#064e3b" />
-                    <circle cx="22.5" cy="22.5" r="3.5" fill="#064e3b" />
-                    <circle cx="77.5" cy="22.5" r="3.5" fill="#064e3b" />
-                    <circle cx="22.5" cy="77.5" r="3.5" fill="#064e3b" />
-                    <circle cx="77.5" cy="77.5" r="3.5" fill="#064e3b" />
-                  </svg>
-                  <span class="relative z-10 text-[9px] sm:text-[10px] font-black text-[#064e3b] select-none flex items-center justify-center leading-none" style="font-family: 'Outfit', sans-serif;">
-                    {{ toArabicNumber(ayat.ayat_number) }}
+                  <template v-for="(word, wIdx) in ayat.words" :key="word.id"><QuranInteractiveWord :word="word" /><span v-if="wIdx < ayat.words.length - 1">{{ ' ' }}</span></template><span class="relative inline-flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 mr-1.5 ml-1.5 sm:mr-2 sm:ml-2 select-none align-middle cursor-default shrink-0 translate-y-[4px] sm:translate-y-[5px]">
+                    <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full text-[#c29b38] transition-transform duration-300 hover:rotate-45">
+                      <rect x="22" y="22" width="56" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="5" transform="rotate(45 50 50)" />
+                      <rect x="22" y="22" width="56" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="5" />
+                      <circle cx="50" cy="50" r="23" fill="#fdfcf7" stroke="currentColor" stroke-width="2.5" />
+                      <circle cx="50" cy="50" r="19" fill="none" stroke="#064e3b" stroke-width="1.5" stroke-dasharray="3,2.5" />
+                      <circle cx="50" cy="11" r="3.5" fill="#064e3b" />
+                      <circle cx="50" cy="89" r="3.5" fill="#064e3b" />
+                      <circle cx="11" cy="50" r="3.5" fill="#064e3b" />
+                      <circle cx="89" cy="50" r="3.5" fill="#064e3b" />
+                      <circle cx="22.5" cy="22.5" r="3.5" fill="#064e3b" />
+                      <circle cx="77.5" cy="22.5" r="3.5" fill="#064e3b" />
+                      <circle cx="22.5" cy="77.5" r="3.5" fill="#064e3b" />
+                      <circle cx="77.5" cy="77.5" r="3.5" fill="#064e3b" />
+                    </svg>
+                    <span class="relative z-10 text-[8px] sm:text-[10px] font-black text-[#064e3b] select-none flex items-center justify-center leading-none" style="font-family: 'Outfit', sans-serif;">
+                      {{ toArabicNumber(ayat.ayat_number) }}
+                    </span>
                   </span>
-                </span>
+                </span>{{ ' ' }}
               </template>
             </div>
           </div>
+          </div>
  
-          <!-- Page Number Indicator at bottom center -->
-          <div class="flex items-center justify-center gap-4 mt-6 sm:mt-12 text-[#6b7280] font-extrabold text-xs sm:text-sm tracking-wider">
-            <span class="h-[1px] w-6 sm:w-8 bg-[#e6e2d8]"></span>
-            <span>Halaman {{ page.pageNumber }}</span>
-            <span class="h-[1px] w-6 sm:w-8 bg-[#e6e2d8]"></span>
+          <!-- Page Number Indicator at bottom center (Pushed to bottom) -->
+          <div class="flex items-center justify-center gap-4 mt-auto mb-3 sm:mb-4 text-[#6b7280] font-extrabold text-xs sm:text-sm tracking-wider">
+            <span>{{ page.pageNumber }}</span>
           </div>
         </div>
       </div>
@@ -609,6 +601,21 @@ const firstPageOfSurah = computed(() => {
   return surahPages.value.length > 0 ? surahPages.value[0].pageNumber : null
 })
 
+// Dynamic page font size scaling helper based on word density to guarantee exactly 15 lines on both mobile & desktop
+const getPageWordCount = (page) => {
+  if (!page || !page.ayahs) return 0
+  return page.ayahs.reduce((sum, a) => sum + (a.words ? a.words.length : 0), 0)
+}
+
+const getPageStyle = (page) => {
+  const wordCount = getPageWordCount(page)
+  // Baseline is 123 words per page. Scale factor clamped between 0.75 and 1.0.
+  const scale = Math.min(1.0, Math.max(0.75, 123 / wordCount))
+  return {
+    '--page-font-scale': scale
+  }
+}
+
 // Scroll Container Ref binding
 const scrollContainer = ref(null)
 
@@ -891,9 +898,18 @@ body {
 .font-uthmani {
   font-family: 'Amiri Quran', 'Amiri', 'Uthmanic Hafs', serif !important;
   letter-spacing: normal !important;
-  word-spacing: 0.18em !important;
+  word-spacing: -0.07em !important;
   font-feature-settings: "liga" on, "clig" on !important;
   font-variant-ligatures: common-ligatures !important;
+  
+  /* Dynamic font-size using CSS custom property that automatically scales based on the page's word count! */
+  font-size: calc(clamp(0.96rem, 2.45dvh, 1.4rem) * var(--page-font-scale, 1.0)) !important;
+}
+
+@media (min-width: 640px) {
+  .font-uthmani {
+    font-size: calc(clamp(1.55rem, 4vh, 1.95rem) * var(--page-font-scale, 1.0)) !important;
+  }
 }
 
 /* Chrome, Safari, Edge, Opera: Hide input number spin buttons */

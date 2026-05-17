@@ -7,3 +7,24 @@
         @apply cursor-pointer mx-1 px-1 rounded hover:bg-gray-100 transition-colors duration-200 text-xl font-arabic;
     }
 }
+
+/* Custom Desktop Scrollbar Styling (Aesthetic Grey) */
+@media (min-width: 1024px) {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #c8c8c8;
+    border-radius: 5px;
+    border: 2px solid #f1f1f1;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #a0a0a0;
+  }
+}
+

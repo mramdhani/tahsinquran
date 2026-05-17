@@ -61,6 +61,20 @@ export const TAJWID_DATABASE: Record<string, Omit<TajwidRule, 'id'>> = {
     description: 'Mad asli (Fathah diikuti Alif, Kasrah diikuti Ya sukun, Dhammah diikuti Waw sukun). Dipanjangkan 2 harakat.',
     example_arabic: 'قَالُواْ'
   },
+  mad_wajib_muttasil: {
+    name: 'Mad Wajib Muttasil',
+    name_arabic: 'مَدٌّ وَاجِبٌ مُتَّصِلٌ',
+    color_code: '#8b5cf6',
+    description: 'Huruf mad bertemu Hamzah dalam satu kata (ditandai tanda bendera ٓ). Dibaca panjang 4-5 harakat.',
+    example_arabic: 'السُّفَهَاءُ'
+  },
+  mad_jaiz_munfasil: {
+    name: 'Mad Jaiz Munfasil',
+    name_arabic: 'مَدٌّ جَائِزٌ مُنْفَصِلٌ',
+    color_code: '#a78bfa',
+    description: 'Huruf mad bertemu Hamzah di awal kata berikutnya (ditandai tanda bendera ٓ). Dibaca panjang 4-5 harakat.',
+    example_arabic: 'إِنَّا أَنْزَلْنَاهُ'
+  },
   qalqalah_sughra: {
     name: 'Qalqalah Sughra',
     name_arabic: 'قَلْقَلَةٌ صُغْرَىٰ',
@@ -120,28 +134,28 @@ export const TAJWID_DATABASE: Record<string, Omit<TajwidRule, 'id'>> = {
 };
 
 // Sifat Huruf definitions
-export const SIFAT_DATABASE: Record<string, Omit<SifatInfo, 'name'>> = {
-  hams: { name_arabic: 'هَمْسٌ', type: 'Berlawanan', description: 'Suara mengalir (disertai hembusan nafas).', opposite: 'Jahr' },
-  jahr: { name_arabic: 'جَهْرٌ', type: 'Berlawanan', description: 'Suara tertahan (tidak ada nafas mengalir).', opposite: 'Hams' },
-  syiddah: { name_arabic: 'شِدَّةٌ', type: 'Berlawanan', description: 'Suara tertahan kuat di makhraj.', opposite: 'Rakhawah' },
-  tawassuth: { name_arabic: 'تَوَسُّطٌ', type: 'Berlawanan', description: 'Sedang (suara tidak mengalir sempurna & tidak tertahan penuh).', opposite: 'Syiddah / Rakhawah' },
-  rakhawah: { name_arabic: 'رَخَاوَةٌ', type: 'Berlawanan', description: 'Suara mengalir lancar.', opposite: 'Syiddah' },
-  istila: { name_arabic: 'اسْتِعْلَاءٌ', type: 'Berlawanan', description: 'Pangkal lidah terangkat ke langit-langit (suara tebal).', opposite: 'Istifal' },
-  istifal: { name_arabic: 'اسْتِفَالٌ', type: 'Berlawanan', description: 'Pangkal lidah turun ke dasar mulut (suara tipis).', opposite: 'Isti\'la' },
-  ithbaq: { name_arabic: 'إِطْبَاقٌ', type: 'Berlawanan', description: 'Lidah menempel rapat ke langit-langit atas.', opposite: 'Infitah' },
-  infitah: { name_arabic: 'اِنْفِتَاحٌ', type: 'Berlawanan', description: 'Lidah merenggang dari langit-langit atas.', opposite: 'Ithbaq' },
-  idzlaq: { name_arabic: 'إِذْلَاقٌ', type: 'Berlawanan', description: 'Keluar dengan mudah dan cepat dari ujung lidah/bibir.', opposite: 'Ishmat' },
-  ishmat: { name_arabic: 'إِصْمَاتٌ', type: 'Berlawanan', description: 'Keluar dengan mantap dan agak berat.', opposite: 'Idzlaq' },
+export const SIFAT_DATABASE: Record<string, SifatInfo> = {
+  hams: { name: 'Hams', name_arabic: 'هَمْسٌ', type: 'Berlawanan', description: 'Suara mengalir (disertai hembusan nafas).', opposite: 'Jahr' },
+  jahr: { name: 'Jahr', name_arabic: 'جَهْرٌ', type: 'Berlawanan', description: 'Suara tertahan (tidak ada nafas mengalir).', opposite: 'Hams' },
+  syiddah: { name: 'Syiddah', name_arabic: 'شِدَّةٌ', type: 'Berlawanan', description: 'Suara tertahan kuat di makhraj.', opposite: 'Rakhawah' },
+  tawassuth: { name: 'Al-Bayyiniyah (Tawassuth)', name_arabic: 'تَوَسُّطٌ / بَيْنِيَّةٌ', type: 'Berlawanan', description: 'Mengalir sedang (suara tidak mengalir sempurna & tidak tertahan penuh).', opposite: 'Syiddah / Rakhawah' },
+  rakhawah: { name: 'Rakhawah', name_arabic: 'رَخَاوَةٌ', type: 'Berlawanan', description: 'Suara mengalir lancar.', opposite: 'Syiddah' },
+  istila: { name: 'Isti\'la', name_arabic: 'اسْتِعْلَاءٌ', type: 'Berlawanan', description: 'Pangkal lidah terangkat ke langit-langit (suara tebal).', opposite: 'Istifal' },
+  istifal: { name: 'Istifal', name_arabic: 'اسْتِفَالٌ', type: 'Berlawanan', description: 'Pangkal lidah turun ke dasar mulut (suara tipis).', opposite: 'Isti\'la' },
+  ithbaq: { name: 'Ithbaq', name_arabic: 'إِطْبَاقٌ', type: 'Berlawanan', description: 'Lidah menempel rapat ke langit-langit atas.', opposite: 'Infitah' },
+  infitah: { name: 'Infitah', name_arabic: 'اِنْفِتَاحٌ', type: 'Berlawanan', description: 'Lidah merenggang dari langit-langit atas.', opposite: 'Ithbaq' },
+  idzlaq: { name: 'Idzlaq', name_arabic: 'إِذْلَاقٌ', type: 'Berlawanan', description: 'Keluar dengan mudah dan cepat dari ujung lidah/bibir.', opposite: 'Ishmat' },
+  ishmat: { name: 'Ishmat', name_arabic: 'إِصْمَاتٌ', type: 'Berlawanan', description: 'Keluar dengan mantap dan agak berat.', opposite: 'Idzlaq' },
   
   // Tanpa Lawan
-  shafir: { name_arabic: 'صَفِيرٌ', type: 'Tanpa Lawan', description: 'Desis suara yang kuat menyerupai siulan burung.' },
-  qalqalah: { name_arabic: 'قَلْقَلَةٌ', type: 'Tanpa Lawan', description: 'Suara memantul kuat saat huruf dalam keadaan sukun/mati.' },
-  lin: { name_arabic: 'لِيْنٌ', type: 'Tanpa Lawan', description: 'Diucapkan dengan lembut dan mudah (huruf Waw/Ya sukun didahului fathah).' },
-  inhiraf: { name_arabic: 'اِنْحِرَافٌ', type: 'Tanpa Lawan', description: 'Makhraj huruf melenceng dari makhraj asalnya.' },
-  takrir: { name_arabic: 'تَكْرِيرٌ', type: 'Tanpa Lawan', description: 'Ujung lidah bergetar tipis saat pengucapan.' },
-  tafasysyi: { name_arabic: 'تَفَشِّيٌ', type: 'Tanpa Lawan', description: 'Udara menyebar luas di dalam mulut.' },
-  istithalah: { name_arabic: 'اسْتِطَالَةٌ', type: 'Tanpa Lawan', description: 'Suara memanjang dari awal hingga akhir sisi lidah.' },
-  ghunnah: { name_arabic: 'غُنَّةٌ', type: 'Tanpa Lawan', description: 'Suara dengung yang keluar dari pangkal hidung (Al-Khaysyum).' }
+  shafir: { name: 'Shafir', name_arabic: 'صَفِيرٌ', type: 'Tanpa Lawan', description: 'Desis suara yang kuat menyerupai siulan burung.' },
+  qalqalah: { name: 'Qalqalah', name_arabic: 'قَلْقَلَةٌ', type: 'Tanpa Lawan', description: 'Suara memantul kuat saat huruf dalam keadaan sukun/mati.' },
+  lin: { name: 'Lin', name_arabic: 'لِيْنٌ', type: 'Tanpa Lawan', description: 'Diucapkan dengan lembut dan mudah (huruf Waw/Ya sukun didahului fathah).' },
+  inhiraf: { name: 'Inhiraf', name_arabic: 'اِنْحِرَافٌ', type: 'Tanpa Lawan', description: 'Makhraj huruf melenceng dari makhraj asalnya.' },
+  takrir: { name: 'Takrir', name_arabic: 'تَكْرِيرٌ', type: 'Tanpa Lawan', description: 'Ujung lidah bergetar tipis saat pengucapan.' },
+  tafasysyi: { name: 'Tafasysyi', name_arabic: 'تَفَشِّيٌ', type: 'Tanpa Lawan', description: 'Udara menyebar luas di dalam mulut.' },
+  istithalah: { name: 'Istithalah', name_arabic: 'اسْتِطَالَةٌ', type: 'Tanpa Lawan', description: 'Suara memanjang dari awal hingga akhir sisi lidah.' },
+  ghunnah: { name: 'Ghunnah', name_arabic: 'غُنَّةٌ', type: 'Tanpa Lawan', description: 'Suara dengung yang keluar dari pangkal hidung (Al-Khaysyum).' }
 };
 
 // Fawatihah / Huruf Muqatta'ah Database for Opening Chapters of Surahs
@@ -237,6 +251,16 @@ const LETTER_SIFAT_CODES: Record<string, { name: string; codes: string[] }> = {
   'ة': { name: 'Ta\' Marbuthah', codes: ['hams', 'syiddah', 'istifal', 'infitah', 'ishmat'] }
 };
 
+export const LETTER_NAMES: Record<string, string> = {
+  'ء': 'Hamzah (ء)', 'أ': 'Alif Hamzah (أ)', 'ا': 'Alif (ا)', 'ب': 'Ba (ب)', 'ت': 'Ta (ت)',
+  'ث': 'Tsa (ث)', 'ج': 'Jim (ج)', 'ح': 'Ha (ح)', 'خ': 'Kha (خ)', 'د': 'Dal (د)',
+  'ذ': 'Dzal (ذ)', 'ر': 'Ra (ر)', 'z': 'Za (ز)', 'ز': 'Za (ز)', 'س': 'Sin (س)',
+  'ش': 'Syin (ش)', 'ص': 'Sad (ص)', 'ض': 'Dad (ض)', 'ط': 'Tha (ط)', 'ظ': 'Zha (ظ)',
+  'ع': '‘Ain (ع)', 'غ': 'Ghain (غ)', 'ف': 'Fa (ف)', 'ق': 'Qaf (ق)', 'ك': 'Kaf (ك)',
+  'ل': 'Lam (ل)', 'م': 'Mim (م)', 'ن': 'Nun (ن)', 'و': 'Waw (و)', 'ه': 'Ha (ه)',
+  'ي': 'Ya (ي)', 'ى': 'Ya Maqshurah (ى)', 'ی': 'Ya (ي)'
+};
+
 // Strips diacritics to get plain letters and normalizes Uthmanic symbols
 export function getPlainArabicLetters(text: string): string[] {
   // Strip all harakat/diacritics: Fathah, Kasrah, Dhammah, Sukun, Tasydid, Tanwin, and small high characters
@@ -268,6 +292,64 @@ export function getPlainArabicLetters(text: string): string[] {
   });
 }
 
+// Helper: Check Nun sukun rules (Iqlab, Idzhar Halqi, Ikhfa Haqiqi) inside the same word
+export function checkInternalNunSukun(wordText: string): TajwidRule[] {
+  const rules: TajwidRule[] = [];
+  
+  for (let i = 0; i < wordText.length; i++) {
+    if (wordText[i] === 'ن') {
+      // Check if it has a vowel immediately following it
+      const nextChar = wordText[i + 1] || '';
+      const hasVowel = /[ًٌٍَُِّ]/.test(nextChar);
+      if (hasVowel) continue; // Active vocalized Nun, not sukun
+      
+      // Find the next plain letter in the word
+      let nextLetter = '';
+      for (let j = i + 1; j < wordText.length; j++) {
+        const char = wordText[j];
+        if (LETTER_SIFAT_CODES[char] || char === 'ٱ' || char === 'أ' || char === 'إ' || char === 'آ' || char === 'ى' || char === 'ی') {
+          // Normalize
+          if (char === 'ٱ' || char === 'أ' || char === 'إ' || char === 'آ') {
+            nextLetter = 'ا';
+          } else if (char === 'ى' || char === 'ی') {
+            nextLetter = 'ي';
+          } else {
+            nextLetter = char;
+          }
+          break;
+        }
+      }
+      
+      if (nextLetter) {
+        const targetLetterLabel = LETTER_NAMES[nextLetter] || nextLetter;
+        if (nextLetter === 'ب') {
+          rules.push({
+            id: 'iqlab',
+            ...TAJWID_DATABASE.iqlab,
+            description: `Nun mati (نْ) pada kata "${wordText}" bertemu dengan huruf "${targetLetterLabel}" di dalam kata yang sama. Suara nun mati berubah menjadi suara Mim (م) disertai dengung ditahan 2 harakat.`,
+            example_arabic: wordText
+          });
+        } else if (/[ءهعحغkh]/.test(nextLetter) || nextLetter === 'خ') {
+          rules.push({
+            id: 'idzhar_halqi',
+            ...TAJWID_DATABASE.idzhar_halqi,
+            description: `Nun mati (نْ) pada kata "${wordText}" bertemu dengan huruf tenggorokan "${targetLetterLabel}" di dalam kata yang sama. Harus dibaca jelas dan tegas tanpa dengung.`,
+            example_arabic: wordText
+          });
+        } else if (/[تثجدذزسشصضطظفقك]/.test(nextLetter)) {
+          rules.push({
+            id: 'ikhfa_haqiqi',
+            ...TAJWID_DATABASE.ikhfa_haqiqi,
+            description: `Nun mati (نْ) pada kata "${wordText}" bertemu dengan huruf ikhfa "${targetLetterLabel}" di dalam kata yang sama. Dibaca samar-samar disertai dengung ditahan 2 harakat.`,
+            example_arabic: wordText
+          });
+        }
+      }
+    }
+  }
+  return rules;
+}
+
 // Get Sifat Huruf for a single arabic character
 export function analyzeLetter(char: string): LetterAnalysis | null {
   const mapping = LETTER_SIFAT_CODES[char];
@@ -275,10 +357,8 @@ export function analyzeLetter(char: string): LetterAnalysis | null {
   
   const sifatList: SifatInfo[] = mapping.codes.map(code => {
     const rawSifat = SIFAT_DATABASE[code];
-    // Capitalize code for the name
-    const name = code.charAt(0).toUpperCase() + code.slice(1);
     return {
-      name,
+      name: rawSifat.name,
       name_arabic: rawSifat.name_arabic,
       type: rawSifat.type,
       description: rawSifat.description,
@@ -291,6 +371,72 @@ export function analyzeLetter(char: string): LetterAnalysis | null {
     name: mapping.name,
     sifat: sifatList
   };
+}
+
+// Helper: Check Nun Sakinah (Nun mati) in Uthmanic/Standard Arabic
+function checkNunSakinah(wordText: string): boolean {
+  const lastNunIdx = wordText.lastIndexOf('ن');
+  if (lastNunIdx === -1) return false;
+  const suffix = wordText.slice(lastNunIdx + 1);
+  return !/[َُِ]/.test(suffix);
+}
+
+// Helper: Check Tanwin (Standard and Uthmanic variant codepoints)
+function checkTanwin(wordText: string): boolean {
+  if (/[\u064B\u064C\u064D\u08F0\u08F1\u08F2\u08D8\u08D9\u08DA]/.test(wordText)) return true;
+  const smallMimIdx = wordText.indexOf('ۢ');
+  if (smallMimIdx !== -1) {
+    const before = smallMimIdx > 0 ? wordText[smallMimIdx - 1] : '';
+    return before !== 'ن';
+  }
+  return false;
+}
+
+// Helper: Check Mim Sakinah (Mim mati) in Uthmanic/Standard Arabic
+function checkMimSakinah(wordText: string): boolean {
+  const lastMimIdx = wordText.lastIndexOf('م');
+  if (lastMimIdx === -1) return false;
+  const suffix = wordText.slice(lastMimIdx + 1);
+  return !/[َُِ]/.test(suffix);
+}
+
+// Helper: Check Mad Thabi'i with 100% precise phonetic rules
+function checkMadThabii(wordText: string): boolean {
+  if (wordText.includes('ٰ') || wordText.includes('\u0670')) return true;
+  
+  for (let i = 0; i < wordText.length; i++) {
+    const char = wordText[i];
+    
+    // 1. Alif Mad: plain 'ا' preceded by Fathah (َ)
+    if (char === 'ا' && i > 0) {
+      const prevSub = wordText.slice(0, i);
+      if (prevSub.includes('\u064E')) {
+        return true;
+      }
+    }
+    
+    // 2. Waw Mad: 'و' (quiescent - no fathah/kasrah/dhammah on it) preceded by Dhammah (ُ)
+    if (char === 'و' && i > 0) {
+      const prevSub = wordText.slice(0, i);
+      const afterSub = wordText.slice(i + 1);
+      const hasVowelOnWaw = /[َُِ]/.test(afterSub[0] || '');
+      if (prevSub.includes('\u064F') && !hasVowelOnWaw) {
+        return true;
+      }
+    }
+    
+    // 3. Ya Mad: 'ي' or 'ى' or 'ی' (quiescent - no fathah/kasrah/dhammah on it) preceded by Kasrah (ِ)
+    if ((char === 'ي' || char === 'ى' || char === 'ی') && i > 0) {
+      const prevSub = wordText.slice(0, i);
+      const afterSub = wordText.slice(i + 1);
+      const hasVowelOnYa = /[َُِ]/.test(afterSub[0] || '');
+      if (prevSub.includes('\u0650') && !hasVowelOnYa) {
+        return true;
+      }
+    }
+  }
+  
+  return false;
 }
 
 // Highly sophisticated Dynamic Arabic word Tajwid analyzer (Supports cross-word context)
@@ -313,16 +459,31 @@ export function analyzeWordTajwid(wordText: string, nextWordText: string | null 
 
   // 2. Ghunnah Musyaddadah: Shaddah (ّ) on Nun (ن) or Mim (م)
   if (wordText.includes('نّ') || wordText.includes('مّ') || wordText.includes('نَّ') || wordText.includes('مَّ') || wordText.includes('نِّ') || wordText.includes('مِّ') || wordText.includes('نُّ') || wordText.includes('مُّ')) {
-    rules.push({ id: 'ghunnah', ...TAJWID_DATABASE.ghunnah });
+    rules.push({
+      id: 'ghunnah',
+      ...TAJWID_DATABASE.ghunnah,
+      description: `Huruf Nun/Mim bertasydid pada kata "${wordText}" dibaca berdengung (ghunnah) yang ditahan 2 harakat.`,
+      example_arabic: wordText
+    });
   }
   
   // 3. Al-Qamariyah vs Al-Syamsiyah
   if (wordText.startsWith('ٱلْ') || wordText.startsWith('الْ') || wordText.startsWith('لِلْ') || wordText.includes('ـلْ')) {
-    rules.push({ id: 'idzhar_qamariyah', ...TAJWID_DATABASE.idzhar_qamariyah });
+    rules.push({
+      id: 'idzhar_qamariyah',
+      ...TAJWID_DATABASE.idzhar_qamariyah,
+      description: `Alif lam pada kata "${wordText}" dibaca jelas (idzhar qamariyah) karena bertemu dengan huruf Qamariyah.`,
+      example_arabic: wordText
+    });
   } else if (wordText.startsWith('ٱل') || wordText.startsWith('ال') || wordText.startsWith('لَّ')) {
     const hasSyamsiyahTasydid = /[تثdذرزسشصضطظلن]ّ/.test(wordText) || /[تثdذرزسشصضطظلن][\u064E\u0650\u064F]ّ/.test(wordText) || wordText.startsWith('ٱلصَّ') || wordText.startsWith('ٱلتَّ') || wordText.startsWith('ٱلرَّ');
     if (hasSyamsiyahTasydid || wordText.startsWith('ٱلص') || wordText.startsWith('ٱلن') || wordText.startsWith('ٱلذ')) {
-      rules.push({ id: 'idgham_syamsiyah', ...TAJWID_DATABASE.idgham_syamsiyah });
+      rules.push({
+        id: 'idgham_syamsiyah',
+        ...TAJWID_DATABASE.idgham_syamsiyah,
+        description: `Alif lam pada kata "${wordText}" dilebur langsung (idgham syamsiyah) karena bertemu dengan huruf Syamsiyah.`,
+        example_arabic: wordText
+      });
     }
   }
 
@@ -333,39 +494,150 @@ export function analyzeWordTajwid(wordText: string, nextWordText: string | null 
       const penUltimate = plain[plain.length - 2];
       const finalLetter = plain[plain.length - 1];
       if ((penUltimate === 'ي' || penUltimate === 'و' || penUltimate === 'ا') && (finalLetter === 'ن' || finalLetter === 'م' || finalLetter === 'د' || finalLetter === 'ب')) {
-        rules.push({ id: 'mad_arid', ...TAJWID_DATABASE.mad_arid });
+        rules.push({
+          id: 'mad_arid',
+          ...TAJWID_DATABASE.mad_arid,
+          description: `Mad Thabi'i di akhir kata "${wordText}" bertemu huruf hidup yang dibaca mati karena waqaf di akhir ayat. Dibaca panjang 2, 4, atau 6 harakat.`,
+          example_arabic: wordText
+        });
       }
+    }
+  }
+
+  // Maddah "Bendera" Check: Mad Wajib Muttasil & Mad Jaiz Munfasil
+  const hasMaddahWave = wordText.includes('\u0653') || wordText.includes('ٓ') || wordText.includes('\u06e4');
+  if (hasMaddahWave) {
+    const hasHamzahInSameWord = /[ءأإؤئ]/.test(wordText);
+    if (hasHamzahInSameWord) {
+      rules.push({
+        id: 'mad_wajib_muttasil',
+        ...TAJWID_DATABASE.mad_wajib_muttasil,
+        description: `Huruf mad pada kata "${wordText}" bertemu Hamzah dalam satu kata (ditandai tanda bendera ٓ). Dibaca panjang 4-5 harakat.`,
+        example_arabic: wordText
+      });
+    } else {
+      rules.push({
+        id: 'mad_jaiz_munfasil',
+        ...TAJWID_DATABASE.mad_jaiz_munfasil,
+        description: `Huruf mad di akhir kata "${wordText}" bertemu Hamzah di awal kata berikutnya ${nextWordText ? `("${nextWordText}")` : ''} (ditandai tanda bendera ٓ). Dibaca panjang 4-5 harakat.`,
+        example_arabic: nextWordText ? `${wordText} ${nextWordText}` : wordText
+      });
     }
   }
 
   // 5. Qalqalah: look for sukun on ق, ط, b, j, d
   const hasQalqalahSukun = /[قطبجد]ْ/.test(wordText) || /[قطبجد]\u0652/.test(wordText);
   if (hasQalqalahSukun) {
-    rules.push({ id: 'qalqalah_sughra', ...TAJWID_DATABASE.qalqalah_sughra });
+    rules.push({
+      id: 'qalqalah_sughra',
+      ...TAJWID_DATABASE.qalqalah_sughra,
+      description: `Huruf qalqalah sukun pada kata "${wordText}" dibaca memantul tipis/sedang karena berada di tengah kata.`,
+      example_arabic: wordText
+    });
   }
 
-  // 6. Nun Sukun & Tanwin rules (Supports cross-word contextual parsing)
+  // 6. Nun Sukun & Tanwin rules (Supports dynamic cross-word contextual parsing)
   const plainLetters = getPlainArabicLetters(wordText);
-  // Extremely robust sukun/tanwin checks that bypass trailing glyphs or layout artifacts
-  const endsWithNunSukun = wordText.endsWith('ن') || wordText.endsWith('نْ') || wordText.endsWith('نْ ') || (plainLetters.length > 0 && plainLetters[plainLetters.length - 1] === 'ن' && !/[َُِ]/.test(wordText.slice(-3)));
-  const endsWithTanwin = /[\u064B\u064C\u064D]/.test(wordText.slice(-3));
+  const endsWithNunSukun = checkNunSakinah(wordText);
+  const endsWithTanwin = checkTanwin(wordText);
+
+  // Parse internal Nun sukun rules
+  const internalNunSukunRules = checkInternalNunSukun(wordText);
+  rules.push(...internalNunSukunRules);
 
   if (endsWithNunSukun || endsWithTanwin) {
     if (nextWordText) {
       const nextPlain = getPlainArabicLetters(nextWordText);
       if (nextPlain.length > 0) {
         const firstLetterOfNext = nextPlain[0];
+        const connector = endsWithNunSukun ? 'Nun mati (نْ)' : 'Harakat Tanwin';
+        const targetLetterLabel = LETTER_NAMES[firstLetterOfNext] || firstLetterOfNext;
+        
         if (/[ءهعحغخ]/.test(firstLetterOfNext)) {
-          rules.push({ id: 'idzhar_halqi', ...TAJWID_DATABASE.idzhar_halqi });
+          rules.push({
+            id: 'idzhar_halqi',
+            name: 'Idzhar Halqi',
+            name_arabic: 'إِظْهَارٌ حَلْقِيٌّ',
+            color_code: '#059669',
+            description: `${connector} pada kata "${wordText}" bertemu dengan huruf tenggorokan ${targetLetterLabel} di awal kata berikutnya ("${nextWordText}"). Dibaca jelas, tegas, tanpa berdengung.`,
+            example_arabic: `${wordText} ${nextWordText}`
+          });
         } else if (/[لر]/.test(firstLetterOfNext)) {
-          rules.push({ id: 'idgham_bilaghunnah', ...TAJWID_DATABASE.idgham_bilaghunnah });
+          rules.push({
+            id: 'idgham_bilaghunnah',
+            name: 'Idgham Bilaghunnah',
+            name_arabic: 'إِدْغَامٌ بِلا غُنَّةٍ',
+            color_code: '#dc2626',
+            description: `${connector} pada kata "${wordText}" bertemu dengan huruf ${targetLetterLabel} di awal kata berikutnya ("${nextWordText}"). Dibaca melebur sepenuhnya tanpa disertai dengung (bighunnah).`,
+            example_arabic: `${wordText} ${nextWordText}`
+          });
         } else if (/[ينمو]/.test(firstLetterOfNext) || firstLetterOfNext === 'ي' || firstLetterOfNext === 'ی') {
-          rules.push({ id: 'idgham_bighunnah', ...TAJWID_DATABASE.idgham_bighunnah });
+          rules.push({
+            id: 'idgham_bighunnah',
+            name: 'Idgham Bighunnah',
+            name_arabic: 'إِدْغَامٌ بِغُنَّةٍ',
+            color_code: '#ea580c',
+            description: `${connector} pada kata "${wordText}" bertemu dengan huruf ${targetLetterLabel} di awal kata berikutnya ("${nextWordText}"). Dibaca melebur masuk ke huruf berikutnya disertai dengung yang ditahan 2 harakat.`,
+            example_arabic: `${wordText} ${nextWordText}`
+          });
         } else if (firstLetterOfNext === 'ب') {
-          rules.push({ id: 'iqlab', ...TAJWID_DATABASE.iqlab });
+          rules.push({
+            id: 'iqlab',
+            name: 'Iqlab',
+            name_arabic: 'إِقْلَابٌ',
+            color_code: '#db2777',
+            description: `${connector} pada kata "${wordText}" bertemu dengan huruf ${targetLetterLabel} di awal kata berikutnya ("${nextWordText}"). Suara nun mati/tanwin berubah sepenuhnya menjadi suara Mim (م) samar disertai dengung ditahan 2 harakat.`,
+            example_arabic: `${wordText} ${nextWordText}`
+          });
         } else if (/[تثجدذزسشصضطظفقك]/.test(firstLetterOfNext)) {
-          rules.push({ id: 'ikhfa_haqiqi', ...TAJWID_DATABASE.ikhfa_haqiqi });
+          rules.push({
+            id: 'ikhfa_haqiqi',
+            name: 'Ikhfa Haqiqi',
+            name_arabic: 'إِخْفَاءٌ حَقِيقِيٌّ',
+            color_code: '#4f46e5',
+            description: `${connector} pada kata "${wordText}" bertemu dengan huruf ikhfa ${targetLetterLabel} di awal kata berikutnya ("${nextWordText}"). Dibaca samar-samar (antara jelas dan melebur) disertai dengung ditahan 2 harakat.`,
+            example_arabic: `${wordText} ${nextWordText}`
+          });
         }
+      }
+    }
+  }
+
+  // 7. Mim Sakinah / Mim Mati Rules (Mutamatsilain, Ikhfa Syafawi, Idzhar Syafawi)
+  const endsWithMimSukun = checkMimSakinah(wordText);
+  if (endsWithMimSukun && nextWordText) {
+    const nextPlain = getPlainArabicLetters(nextWordText);
+    if (nextPlain.length > 0) {
+      const firstLetterOfNext = nextPlain[0];
+      const targetLetterLabel = LETTER_NAMES[firstLetterOfNext] || firstLetterOfNext;
+      
+      if (firstLetterOfNext === 'م') {
+        rules.push({
+          id: 'idgham_mimi',
+          name: 'Idgham Mimi (Mutamatsilain)',
+          name_arabic: 'إِدْغَامٌ مِثْلَيْنِ',
+          color_code: '#f97316',
+          description: `Mim sukun (مْ) pada kata "${wordText}" bertemu dengan sesama huruf Mim (${targetLetterLabel}) di awal kata berikutnya ("${nextWordText}"). Dibaca melebur sempurna disertai dengung ditahan 2 harakat.`,
+          example_arabic: `${wordText} ${nextWordText}`
+        });
+      } else if (firstLetterOfNext === 'ب') {
+        rules.push({
+          id: 'ikhfa_syafawi',
+          name: 'Ikhfa Syafawi',
+          name_arabic: 'إِخْفَاءٌ شَفَوِيٌّ',
+          color_code: '#ec4899',
+          description: `Mim sukun (مْ) pada kata "${wordText}" bertemu dengan huruf Ba (${targetLetterLabel}) di awal kata berikutnya ("${nextWordText}"). Dibaca samar-samar di bibir disertai dengung ditahan 2 harakat.`,
+          example_arabic: `${wordText} ${nextWordText}`
+        });
+      } else {
+        rules.push({
+          id: 'idzhar_syafawi',
+          name: 'Idzhar Syafawi',
+          name_arabic: 'إِظْهَارٌ شَفَوِيٌّ',
+          color_code: '#10b981',
+          description: `Mim sukun (مْ) pada kata "${wordText}" bertemu dengan huruf ${targetLetterLabel} di awal kata berikutnya ("${nextWordText}"). Harus dibaca dengan sangat jelas di bibir tanpa dengung.`,
+          example_arabic: `${wordText} ${nextWordText}`
+        });
       }
     }
   }
@@ -379,20 +651,23 @@ export function analyzeWordTajwid(wordText: string, nextWordText: string | null 
     }
   }
 
-  // Fallback Mad Thabi'i: if no mad_arid is registered but long vowels are present
-  const plain = getPlainArabicLetters(wordText);
-  const hasDaggerAlif = wordText.includes('ٰ') || wordText.includes('\u0670');
-  const hasLongVowel = plain.includes('ا') || plain.includes('ي') || plain.includes('و') || hasDaggerAlif;
-  
-  if (hasLongVowel && !rules.some(r => r.id === 'mad_arid')) {
-    rules.push({ id: 'mad_thabii', ...TAJWID_DATABASE.mad_thabii });
+  // Fallback Mad Thabi'i: if no mad_arid/wajib/jaiz is registered but long vowels are present
+  if (checkMadThabii(wordText) && !rules.some(r => r.id === 'mad_arid' || r.id === 'mad_wajib_muttasil' || r.id === 'mad_jaiz_munfasil')) {
+    rules.push({
+      id: 'mad_thabii',
+      ...TAJWID_DATABASE.mad_thabii,
+      description: `Huruf mad pada kata "${wordText}" dibaca panjang 2 harakat (panjang asli).`,
+      example_arabic: wordText
+    });
   }
 
   // Default fallback to show Lafadz Standar instead of incorrectly claiming Mad Thabi'i
   if (rules.length === 0) {
     rules.push({
       id: 'lafadz_standar',
-      ...TAJWID_DATABASE.lafadz_standar
+      ...TAJWID_DATABASE.lafadz_standar,
+      description: `Lafadz pada kata "${wordText}" dibaca jelas sesuai harakatnya tanpa panjang atau dengung tambahan.`,
+      example_arabic: wordText
     });
   }
 

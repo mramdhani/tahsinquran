@@ -20,16 +20,16 @@
       </div>
     </header>
 
-    <!-- Search & Quick Navigation Hub -->
+    <!-- Search & Quick Navigation Hub (Sleek Smart Search Only) -->
     <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
       <div class="bg-white border border-[#e6e2d8] rounded-3xl p-6 sm:p-8 shadow-xl">
         
         <!-- Search bar input -->
-        <div class="relative mb-6">
+        <div class="relative">
           <input 
             v-model="searchQuery"
             type="text"
-            placeholder="Cari nama surah, nomor surah, arti..."
+            placeholder="Cari nomor juz, halaman, nama surah, atau nomor surah (contoh: 2)..."
             class="w-full bg-[#f9fafb] border border-[#e5e7eb] hover:border-[#064e3b]/50 focus:border-[#064e3b] text-[#1f2937] rounded-2xl pl-12 pr-6 py-4 focus:outline-none focus:ring-2 focus:ring-[#064e3b]/20 text-base font-medium placeholder-[#9ca3af] transition-all shadow-inner"
           />
           <div class="absolute left-4 top-1/2 -translate-y-1/2 text-[#064e3b]">
@@ -40,79 +40,50 @@
 
           <!-- Autocomplete Suggestions Dropdown -->
           <div 
-            v-if="searchQuery && filteredSurahs.length > 0" 
-            class="absolute left-0 right-0 mt-2 bg-white border border-[#e5e7eb] rounded-2xl shadow-2xl z-30 max-h-60 overflow-y-auto divide-y divide-[#e5e7eb]"
+            v-if="searchQuery && smartSuggestions.length > 0" 
+            class="absolute left-0 right-0 mt-2 bg-white border border-[#e5e7eb] rounded-2xl shadow-2xl z-30 max-h-80 overflow-y-auto divide-y divide-[#e5e7eb]"
           >
             <div 
-              v-for="surah in filteredSurahs" 
-              :key="surah.id"
-              @click="selectSurah(surah)"
+              v-for="item in smartSuggestions" 
+              :key="item.id"
+              @click="selectSuggestion(item)"
               class="flex justify-between items-center px-5 py-3.5 hover:bg-[#f3f4f6] cursor-pointer transition-colors group"
             >
               <div class="flex items-center gap-3">
-                <span class="w-8 h-8 rounded-lg bg-[#f3f4f6] group-hover:bg-[#064e3b] text-[#064e3b] group-hover:text-white flex items-center justify-center font-bold text-xs border border-[#e5e7eb] transition-all">
-                  {{ surah.id }}
+                <!-- Smart Rounded Badge based on type -->
+                <span 
+                  class="w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-xs border border-[#e5e7eb] transition-all shadow-sm shrink-0"
+                  :class="[
+                    item.type === 'juz' ? 'bg-[#c29b38]/10 border-[#c29b38]/30 text-[#c29b38]' : '',
+                    item.type === 'halaman' ? 'bg-[#3b82f6]/10 border-[#3b82f6]/30 text-[#3b82f6]' : '',
+                    item.type === 'surah' ? 'bg-[#f3f4f6] group-hover:bg-[#064e3b] text-[#064e3b] group-hover:text-white group-hover:border-[#064e3b]' : ''
+                  ]"
+                >
+                  {{ item.icon }}
                 </span>
-                <div>
+                <div class="text-left">
                   <span class="text-sm font-bold text-[#1f2937] group-hover:text-[#064e3b] transition-colors block leading-snug">
-                    {{ surah.name_latin }}
+                    {{ item.title }}
                   </span>
-                  <span class="text-[10px] text-[#6b7280] block italic leading-none">{{ surah.total_ayats }} Ayat</span>
+                  <span class="text-[10px] text-[#6b7280] block italic leading-none mt-0.5">{{ item.subtitle }}</span>
                 </div>
               </div>
-              <span class="font-uthmani text-xl text-[#064e3b] font-bold" dir="rtl">
-                {{ surah.name_arabic }}
+              
+              <!-- Arabic Calligraphy for Surahs -->
+              <span v-if="item.type === 'surah'" class="font-uthmani text-xl text-[#064e3b] font-bold" dir="rtl">
+                {{ item.arabic }}
               </span>
-            </div>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-[#e6e2d8]">
-          <!-- Quick Page Jump -->
-          <div class="bg-[#f9fafb] border border-[#e5e7eb] rounded-2xl p-4 flex flex-col justify-between gap-3 shadow-sm">
-            <div>
-              <h3 class="text-xs font-bold text-[#064e3b] uppercase tracking-wider mb-1">Lompat Langsung ke Halaman</h3>
-              <p class="text-[#6b7280] text-xs">Mendukung Halaman Mushaf Standar 1 hingga 604.</p>
-            </div>
-            <div class="flex items-center gap-2">
-              <input 
-                v-model="inputPage"
-                type="number"
-                min="1"
-                max="604"
-                placeholder="1-604"
-                @keyup.enter="onPageJump"
-                class="w-full bg-white border border-[#e5e7eb] focus:border-[#064e3b] text-center text-[#1f2937] rounded-xl py-2 px-3 focus:outline-none text-sm font-extrabold focus:ring-2 focus:ring-[#064e3b]/20"
-              />
-              <button 
-                @click="onPageJump" 
-                class="px-5 py-2 bg-[#064e3b] hover:bg-[#08664e] text-white rounded-xl transition-all font-bold text-sm shadow-md active:scale-95 whitespace-nowrap cursor-pointer"
+              <!-- Action pill for Juz / Halaman -->
+              <span 
+                v-else 
+                class="text-[9px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-md border"
+                :class="[
+                  item.type === 'juz' ? 'bg-[#c29b38]/10 text-[#8a6d1c] border-[#c29b38]/35' : '',
+                  item.type === 'halaman' ? 'bg-[#3b82f6]/10 text-[#1d4ed8] border-[#3b82f6]/35' : ''
+                ]"
               >
-                Buka Lembar
-              </button>
-            </div>
-          </div>
-
-          <!-- Quick Juz Select -->
-          <div class="bg-[#f9fafb] border border-[#e5e7eb] rounded-2xl p-4 flex flex-col justify-between gap-3 shadow-sm">
-            <div>
-              <h3 class="text-xs font-bold text-[#064e3b] uppercase tracking-wider mb-1">Pilih Juz Instan</h3>
-              <p class="text-[#6b7280] text-xs">Akses koordinat halaman Juz 1 sampai Juz 30.</p>
-            </div>
-            <div class="relative">
-              <select 
-                v-model="selectedJuz"
-                @change="onJuzSelect"
-                class="appearance-none w-full bg-white border border-[#e5e7eb] hover:border-[#064e3b]/50 text-[#1f2937] rounded-xl pl-4 pr-10 py-2 focus:outline-none focus:ring-2 focus:ring-[#064e3b]/20 text-sm font-semibold transition-all cursor-pointer"
-              >
-                <option value="" disabled>Pilih Nomor Juz...</option>
-                <option v-for="j in 30" :key="j" :value="j">Juz {{ j }}</option>
-              </select>
-              <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[#064e3b]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
+                Buka
+              </span>
             </div>
           </div>
         </div>
@@ -187,13 +158,6 @@ useHead({
 const router = useRouter()
 
 const searchQuery = ref('')
-const inputPage = ref('')
-const selectedJuz = ref('')
-
-const selectSurah = (surah) => {
-  searchQuery.value = ''
-  router.push(`/surah/${surah.id}`)
-}
 
 const JUZ_PAGE_MAP = {
   1: 1, 2: 22, 3: 42, 4: 62, 5: 82, 6: 102, 7: 121, 8: 142, 9: 162, 10: 182,
@@ -201,7 +165,65 @@ const JUZ_PAGE_MAP = {
   21: 402, 22: 422, 23: 442, 24: 462, 25: 482, 26: 502, 27: 522, 28: 542, 29: 562, 30: 582
 }
 
-// Dynamic Filter
+// Integrated Dynamic Search & Smart Suggestions (Surah, Juz, Halaman)
+const smartSuggestions = computed(() => {
+  const query = searchQuery.value.trim().toLowerCase()
+  if (!query) return []
+
+  const results = []
+
+  // 1. Check for page / juz numeric search (e.g. typing "2")
+  const numMatch = query.match(/\d+/)
+  if (numMatch) {
+    const num = parseInt(numMatch[0])
+    
+    // Virtual Juz Match
+    if (query.includes('juz') || (num >= 1 && num <= 30 && query === num.toString())) {
+      results.push({
+        type: 'juz',
+        id: `juz-${num}`,
+        number: num,
+        title: `Juz ${num}`,
+        subtitle: `Mulai Halaman ${JUZ_PAGE_MAP[num]}`,
+        icon: 'J'
+      })
+    }
+
+    // Virtual Halaman Match
+    if (query.includes('hal') || query.includes('halaman') || (num >= 1 && num <= 604 && query === num.toString())) {
+      results.push({
+        type: 'halaman',
+        id: `page-${num}`,
+        number: num,
+        title: `Halaman ${num}`,
+        subtitle: `Mushaf Standar Dunia (1-604)`,
+        icon: 'H'
+      })
+    }
+  }
+
+  // 2. Standard Surah searching
+  const matchedSurahs = surahsData.filter(surah => {
+    const idMatch = surah.id.toString() === query
+    const latinMatch = surah.name_latin.toLowerCase().includes(query)
+    const translationMatch = surah.translation_id?.toLowerCase().includes(query)
+    const arabicMatch = surah.name_arabic.includes(query)
+    
+    return idMatch || latinMatch || translationMatch || arabicMatch
+  }).map(surah => ({
+    type: 'surah',
+    id: `surah-${surah.id}`,
+    surahData: surah,
+    title: `${surah.id}. ${surah.name_latin}`,
+    subtitle: `${surah.translation_id} • ${surah.total_ayats} Ayat`,
+    arabic: surah.name_arabic,
+    icon: surah.id
+  }))
+
+  return [...results, ...matchedSurahs]
+})
+
+// Unified Filter for displaying Surahs grid
 const filteredSurahs = computed(() => {
   const query = searchQuery.value.trim().toLowerCase()
   if (!query) return surahsData
@@ -216,8 +238,17 @@ const filteredSurahs = computed(() => {
   })
 })
 
-const onPageJump = async () => {
-  const pageNum = parseInt(inputPage.value)
+const selectSuggestion = async (item) => {
+  searchQuery.value = ''
+  if (item.type === 'surah') {
+    router.push(`/surah/${item.surahData.id}`)
+  } else {
+    const targetPage = item.type === 'juz' ? JUZ_PAGE_MAP[item.number] : item.number
+    await jumpToPageCoordinate(targetPage)
+  }
+}
+
+const jumpToPageCoordinate = async (pageNum) => {
   if (pageNum >= 1 && pageNum <= 604) {
     try {
       const res = await $fetch(`https://api.alquran.cloud/v1/page/${pageNum}`)
@@ -227,21 +258,6 @@ const onPageJump = async () => {
       }
     } catch (e) {
       console.error('Error fetching page coordinate from Cloud API', e)
-    }
-  }
-}
-
-const onJuzSelect = async () => {
-  const targetPage = JUZ_PAGE_MAP[selectedJuz.value]
-  if (targetPage) {
-    try {
-      const res = await $fetch(`https://api.alquran.cloud/v1/page/${targetPage}`)
-      if (res && res.data && res.data.ayahs.length > 0) {
-        const targetSurahId = res.data.ayahs[0].surah.number
-        router.push(`/surah/${targetSurahId}?page=${targetPage}`)
-      }
-    } catch (e) {
-      console.error('Error fetching Juz coordinate', e)
     }
   }
 }

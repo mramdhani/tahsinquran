@@ -58,7 +58,6 @@
         <div class="text-center md:text-right flex flex-col items-center md:items-end gap-1.5">
           <div class="flex items-center gap-3">
             <span class="text-xl sm:text-2xl font-extrabold text-[#fdfaf3]">{{ selectedSurahId }}. {{ surahInfo?.name_latin || 'Memuat...' }}</span>
-            <span class="bg-[#38bdf8]/20 text-[#38bdf8] text-[10px] sm:text-xs font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">info</span>
           </div>
           <p class="text-xs sm:text-sm text-[#a7f3d0] font-semibold italic">{{ surahInfo?.name_translation }}</p>
           <div class="text-[#d1fae5] text-xs sm:text-sm font-bold tracking-wide mt-1">
@@ -68,30 +67,30 @@
       </div>
 
       <!-- Scrollable Quran Pages Stack -->
-      <div class="space-y-12">
+      <div class="space-y-6 sm:space-y-12">
         <div 
           v-for="page in surahPages" 
           :key="page.pageNumber"
           :id="`page-block-${page.pageNumber}`"
-          class="relative bg-white border-0 sm:border border-[#e6e2d8] rounded-none sm:rounded-[2.5rem] px-4 py-8 sm:p-12 mb-6 sm:mb-10 shadow-none sm:shadow-md overflow-hidden"
+          class="relative bg-white border-0 sm:border border-[#e6e2d8] rounded-none sm:rounded-[2.5rem] px-2 py-4 sm:p-12 mb-4 sm:mb-10 shadow-none sm:shadow-md overflow-hidden"
         >
           
           <!-- Bismillah Header (Centered Calligraphy Only) -->
           <div 
             v-if="page.pageNumber === firstPageOfSurah && selectedSurahId !== 1 && selectedSurahId !== 9" 
-            class="text-center mb-8 flex flex-col items-center gap-3"
+            class="text-center mb-4 sm:mb-8 flex flex-col items-center gap-3"
           >
-            <div class="font-uthmani text-3xl sm:text-4xl text-[#064e3b] leading-normal select-none py-2" dir="rtl">
+            <div class="font-uthmani text-2xl sm:text-4xl text-[#064e3b] leading-normal select-none py-1 sm:py-2" dir="rtl">
               بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
             </div>
           </div>
-
+ 
           <!-- Centered Beautiful Arabic Text Wrap (Tighter Spacing like Mushaf Madinah) -->
-          <div class="text-center leading-[1.3] sm:leading-[1.4] lg:leading-[1.5] select-none">
-            <div class="font-uthmani text-[clamp(1.9rem,5vh,2.5rem)] inline-block text-center w-full" dir="rtl" style="color: #064e3b !important;">
+          <div class="text-center leading-[1.22] sm:leading-[1.4] lg:leading-[1.5] select-none">
+            <div class="font-uthmani text-[clamp(1.35rem,3.4dvh,2.5rem)] sm:text-[clamp(1.9rem,5vh,2.5rem)] inline-block text-center w-full" dir="rtl" style="color: #064e3b !important;">
               <template v-for="ayat in page.ayahs" :key="ayat.id">
                 <!-- Wrapper for Ayah words to support precise scrolling & high-contrast highlights -->
-                <span :id="`ayah-${selectedSurahId}-${ayat.ayat_number}`" class="transition-all duration-1000 rounded-xl px-1 py-0.5 inline">
+                <span :id="`ayah-${selectedSurahId}-${ayat.ayat_number}`" class="transition-all duration-1000 rounded-xl px-[2px] sm:px-1 py-0.5 inline">
                   <QuranInteractiveWord 
                     v-for="word in ayat.words" 
                     :key="word.id" 
@@ -99,19 +98,41 @@
                   />
                 </span>
                 
-                <!-- Beautiful CSS-based Ayah End Medallion (Circular Gold Border, readable numbers) -->
-                <span class="inline-flex items-center justify-center w-7 h-7 rounded-full border border-[#064e3b]/30 text-[10px] font-extrabold text-[#c29b38] mx-2 select-none align-middle" style="font-family: 'Outfit', sans-serif;">
-                  {{ toArabicNumber(ayat.ayat_number) }}
+                <!-- Premium Islamic Medallion Ornament (Rotated Overlapping Squares + Accent Dots) -->
+                <span class="relative inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 mx-1.5 sm:mx-2 select-none align-middle cursor-default shrink-0">
+                  <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full text-[#c29b38] transition-transform duration-300 hover:rotate-45">
+                    <!-- Overlapping Rotated Square for Rub el Hizb Star -->
+                    <rect x="22" y="22" width="56" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="5" transform="rotate(45 50 50)" />
+                    <!-- Standard Square -->
+                    <rect x="22" y="22" width="56" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="5" />
+                    <!-- Inner Gold Border with Warm White Fill -->
+                    <circle cx="50" cy="50" r="23" fill="#fdfcf7" stroke="currentColor" stroke-width="2.5" />
+                    <!-- Dotted Emerald Green Inner Orbit -->
+                    <circle cx="50" cy="50" r="19" fill="none" stroke="#064e3b" stroke-width="1.5" stroke-dasharray="3,2.5" />
+                    <!-- Premium Emerald Accent Dots on all 8 Points -->
+                    <circle cx="50" cy="11" r="3.5" fill="#064e3b" />
+                    <circle cx="50" cy="89" r="3.5" fill="#064e3b" />
+                    <circle cx="11" cy="50" r="3.5" fill="#064e3b" />
+                    <circle cx="89" cy="50" r="3.5" fill="#064e3b" />
+                    <circle cx="22.5" cy="22.5" r="3.5" fill="#064e3b" />
+                    <circle cx="77.5" cy="22.5" r="3.5" fill="#064e3b" />
+                    <circle cx="22.5" cy="77.5" r="3.5" fill="#064e3b" />
+                    <circle cx="77.5" cy="77.5" r="3.5" fill="#064e3b" />
+                  </svg>
+                  <!-- Centered Verse Number -->
+                  <span class="relative z-10 text-[9px] sm:text-[10px] font-black text-[#064e3b] pt-[1px] select-none" style="font-family: 'Outfit', sans-serif;">
+                    {{ toArabicNumber(ayat.ayat_number) }}
+                  </span>
                 </span>
               </template>
             </div>
           </div>
-
+ 
           <!-- Page Number Indicator at bottom center -->
-          <div class="flex items-center justify-center gap-4 mt-12 text-[#6b7280] font-extrabold text-sm tracking-wider">
-            <span class="h-[1px] w-8 bg-[#e6e2d8]"></span>
+          <div class="flex items-center justify-center gap-4 mt-6 sm:mt-12 text-[#6b7280] font-extrabold text-xs sm:text-sm tracking-wider">
+            <span class="h-[1px] w-6 sm:w-8 bg-[#e6e2d8]"></span>
             <span>Halaman {{ page.pageNumber }}</span>
-            <span class="h-[1px] w-8 bg-[#e6e2d8]"></span>
+            <span class="h-[1px] w-6 sm:w-8 bg-[#e6e2d8]"></span>
           </div>
         </div>
       </div>
@@ -166,8 +187,8 @@
           
           <div class="mb-8 border-b border-[#e5e7eb] pb-6 pr-8">
             <div class="flex flex-col sm:flex-row sm:items-center gap-4">
-              <div class="bg-[#064e3b]/5 border border-[#064e3b]/10 rounded-2xl px-6 py-3.5 flex items-center justify-center shadow-inner max-w-max">
-                <h3 class="text-4xl sm:text-5xl font-uthmani text-[#064e3b] leading-tight select-all" dir="rtl" style="font-family: 'Amiri', serif !important;">
+              <div class="bg-[#064e3b]/5 border border-[#064e3b]/10 rounded-2xl px-6 py-4 flex items-center justify-center shadow-inner min-w-[140px] min-h-[76px] overflow-visible">
+                <h3 class="text-3xl sm:text-4xl font-uthmani text-[#064e3b] leading-normal select-all" dir="rtl" style="font-family: 'Amiri', serif !important;">
                   {{ tahsinStore.activeWord.text_arabic }}
                 </h3>
               </div>
@@ -241,6 +262,13 @@
                       </span>
                       <span class="text-xs text-[#4b5563] font-bold">({{ activeLetterInfo.name }})</span>
                     </span>
+                  </div>
+
+                  <!-- Contextual Info Card linking letter to clicked word -->
+                  <div class="mb-5 bg-[#064e3b]/5 border border-[#064e3b]/10 rounded-xl p-3.5 text-xs text-[#064e3b] leading-relaxed">
+                    Huruf <strong class="text-sm font-extrabold font-uthmani text-[#064e3b]" style="font-family: 'Amiri', serif !important;">{{ activeLetterInfo.letter }}</strong> 
+                    pada kata <strong class="text-sm font-extrabold font-uthmani text-[#0c6b52]" style="font-family: 'Amiri', serif !important;">{{ tahsinStore.activeWord.text_arabic }}</strong> 
+                    memiliki sifat-sifat pembentuk suara berikut saat diucapkan:
                   </div>
 
                   <div class="space-y-4">
@@ -587,11 +615,12 @@ const fetchSurah = async (pageNumToScroll = null) => {
     if (res && res.data) {
       const data = res.data;
       
+      const localSurah = surahsData.find(s => s.id === data.number)
       surahInfo.value = {
         id: data.number,
         name_arabic: data.name,
         name_latin: data.englishName,
-        name_translation: data.englishNameTranslation,
+        name_translation: localSurah ? localSurah.translation_id : data.englishNameTranslation,
         total_ayats: data.numberOfAyahs,
         revelation_type: data.revelationType
       }

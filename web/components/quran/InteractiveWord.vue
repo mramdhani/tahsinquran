@@ -1,11 +1,11 @@
 <template>
   <span 
     @click="tahsinStore.setActiveWord(word)"
-    class="word-interactive font-uthmani inline-flex items-center justify-center align-middle leading-normal transition-all hover:scale-105 duration-150 mx-0 px-[1px] sm:px-[1px] py-1.5 sm:py-2.5 rounded cursor-pointer select-none"
+    class="word-interactive font-uthmani inline-block align-baseline transition-all duration-150 mx-0 px-[0.5px] sm:px-[1px] rounded cursor-pointer select-none"
     :class="isActive 
-      ? 'bg-[#d4af37]/20 border border-[#d4af37] text-[#064e3b] font-bold shadow-sm px-1.5' 
-      : 'text-[#064e3b] hover:text-[#d4af37]'"
-    :style="tahsinStore.showTajwidColors && wordHasTajwid && !isActive ? `color: ${word.tajwids[0].color_code} !important;` : ''"
+      ? 'text-[#c29b38] font-black' 
+      : 'text-[#064e3b] sm:hover:text-[#d4af37]'"
+    :style="isActive ? 'color: #c29b38 !important;' : (tahsinStore.showTajwidColors && wordHasTajwid ? `color: ${word.tajwids[0].color_code} !important;` : '')"
   >
     {{ word.text_arabic }}
   </span>

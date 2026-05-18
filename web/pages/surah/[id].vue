@@ -56,157 +56,158 @@
           class="relative w-full sm:w-auto shrink-0 snap-center snap-always bg-[#fdfcf7] rounded-none px-4 pt-2 pb-2 sm:px-8 sm:pt-4 sm:pb-4 mb-2 sm:mb-4 h-[calc(100dvh-80px)] sm:h-auto overflow-y-hidden sm:overflow-y-visible flex flex-col border-r border-[#e6e2d8] last:border-r-0 sm:border-r-0 sm:border-b sm:border-[#e6e2d8] sm:last:border-b-0 cursor-pointer"
         >
           <!-- Wrapper container that centers Surah Plate, Bismillah, and Verses together vertically on the card -->
-          <div class="flex-1 flex flex-col justify-center w-full min-h-0">
-            <!-- 1. Elegant Integrated Surah Plate (Renders only at the top of the first page of the Surah) -->
+          <div class="flex-1 flex flex-col justify-center w-full min-h-0 py-2 sm:py-4">
+            <!-- 15 Fixed Lines of the standard Medina Mushaf page -->
             <div 
-            v-if="page.pageNumber === firstPageOfSurah"
-            class="w-full sm:w-[calc(100%+4rem)] bg-[#ffffff] py-2 sm:py-6 px-0 mx-0 sm:mx-[-2rem] mt-[-0.5rem] sm:mt-[-1rem] mb-3 sm:mb-8 rounded-none relative overflow-hidden flex flex-col items-center justify-center select-none min-h-[60px] sm:min-h-[105px] z-10"
-          >
-            <!-- SVG containing the magnificent seamless Islamic patterns & central cartouche -->
-            <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 600 80" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Outer gold/teal double borders wrapping the entire rectangular spanduk -->
-              <rect x="2" y="2" width="596" height="76" rx="6" fill="#ffffff" stroke="#c29b38" stroke-width="2.2" />
-              <rect x="5" y="5" width="590" height="70" rx="4" fill="none" stroke="#14b8a6" stroke-width="0.8" stroke-dasharray="3,2" />
-              
-              <!-- Symmetrical Left Side Classical Quranic Illumination (Rosette & Rumi split-palmettes) -->
-              <g opacity="0.95">
-                <!-- Golden 8-pointed star rosette at center -->
-                <circle cx="80" cy="40" r="12" fill="#ffffff" stroke="#c29b38" stroke-width="1.2" />
-                <path d="M 80 26 L 80 54 M 66 40 L 94 40 M 70 30 L 90 50 M 70 50 L 90 30" stroke="#14b8a6" stroke-width="0.8" />
-                <circle cx="80" cy="40" r="6" fill="#c29b38" />
-                <circle cx="80" cy="40" r="3" fill="#ffffff" />
-                
-                <!-- Elegant flowing branches branching outwards -->
-                <path d="M 68 40 C 48 32, 33 48, 18 40" stroke="#c29b38" stroke-width="1.5" fill="none" />
-                <path d="M 92 40 C 112 32, 127 48, 142 40" stroke="#c29b38" stroke-width="1.5" fill="none" />
-                
-                <!-- Teal teardrop leaves (traditional Tezhip motif) -->
-                <path d="M 33 36 C 25 28, 20 40, 28 44 C 32 41, 36 38, 33 36 Z" fill="#14b8a6" stroke="#c29b38" stroke-width="0.6" opacity="0.9" />
-                <path d="M 127 36 C 119 28, 114 40, 122 44 C 126 41, 130 38, 127 36 Z" fill="#14b8a6" stroke="#c29b38" stroke-width="0.6" opacity="0.9" />
-                
-                <!-- Gold Rumi split-palmettes surrounding the rosette -->
-                <path d="M 52 28 Q 66 16 80 26 Q 66 24 52 28 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
-                <path d="M 52 52 Q 66 64 80 54 Q 66 56 52 52 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
-                <path d="M 108 28 Q 94 16 80 26 Q 94 24 108 28 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
-                <path d="M 108 52 Q 94 64 80 54 Q 94 56 108 52 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
-              </g>
-
-              <!-- Symmetrical Right Side Classical Quranic Illumination (Perfect Mirror) -->
-              <g opacity="0.95" transform="translate(600,0) scale(-1,1)">
-                <!-- Golden 8-pointed star rosette at center -->
-                <circle cx="80" cy="40" r="12" fill="#ffffff" stroke="#c29b38" stroke-width="1.2" />
-                <path d="M 80 26 L 80 54 M 66 40 L 94 40 M 70 30 L 90 50 M 70 50 L 90 30" stroke="#14b8a6" stroke-width="0.8" />
-                <circle cx="80" cy="40" r="6" fill="#c29b38" />
-                <circle cx="80" cy="40" r="3" fill="#ffffff" />
-                
-                <!-- Elegant flowing branches branching outwards -->
-                <path d="M 68 40 C 48 32, 33 48, 18 40" stroke="#c29b38" stroke-width="1.5" fill="none" />
-                <path d="M 92 40 C 112 32, 127 48, 142 40" stroke="#c29b38" stroke-width="1.5" fill="none" />
-                
-                <!-- Teal teardrop leaves (traditional Tezhip motif) -->
-                <path d="M 33 36 C 25 28, 20 40, 28 44 C 32 41, 36 38, 33 36 Z" fill="#14b8a6" stroke="#c29b38" stroke-width="0.6" opacity="0.9" />
-                <path d="M 127 36 C 119 28, 114 40, 122 44 C 126 41, 130 38, 127 36 Z" fill="#14b8a6" stroke="#c29b38" stroke-width="0.6" opacity="0.9" />
-                
-                <!-- Gold Rumi split-palmettes surrounding the rosette -->
-                <path d="M 52 28 Q 66 16 80 26 Q 66 24 52 28 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
-                <path d="M 52 52 Q 66 64 80 54 Q 66 56 52 52 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
-                <path d="M 108 28 Q 94 16 80 26 Q 94 24 108 28 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
-                <path d="M 108 52 Q 94 64 80 54 Q 94 56 108 52 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
-              </g>
-
-              <!-- Traditional Notched Islamic Cartouche in Center (matching reference perfectly) -->
-              <path d="M 180 12 L 420 12 C 435 12, 435 20, 435 28 C 435 36, 442 40, 446 40 C 442 40, 435 44, 435 52 C 435 60, 435 68, 420 68 L 180 68 C 165 68, 165 60, 165 52 C 165 44, 158 40, 154 40 C 158 40, 165 36, 165 28 C 165 20, 165 12, 180 12 Z" fill="#ffffff" stroke="#c29b38" stroke-width="2.5" />
-              <path d="M 183 15 L 417 15 C 431 15, 431 23, 431 29 C 431 35, 438 39, 442 40 C 438 41, 431 45, 431 51 C 431 57, 431 65, 417 65 L 183 65 C 169 65, 169 57, 169 51 C 169 45, 162 41, 158 40 C 162 39, 169 35, 169 29 C 169 23, 169 15, 183 15 Z" fill="none" stroke="#14b8a6" stroke-width="0.8" stroke-dasharray="3,2" />
-            </svg>
-
-            <!-- Centered Calligraphy Image Overlay (HTML absolute overlays keep native aspect ratio, never squished/gepeng!) -->
-            <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-              <img 
-                v-if="selectedSurahId"
-                :src="`https://cdn.jsdelivr.net/gh/gyenabubakar/surah-name-glyphs@master/svg/${selectedSurahId}.svg`" 
-                :alt="surahInfo?.name_latin" 
-                class="h-[32px] sm:h-[42px] w-auto max-w-[170px] sm:max-w-[230px] object-contain filter select-none pointer-events-none"
-                style="filter: invert(18%) sepia(35%) saturate(2132%) hue-rotate(120deg) brightness(95%) contrast(98%);" 
-              />
-            </div>
-          </div>
-
-          <div 
-            v-if="page.pageNumber === firstPageOfSurah && selectedSurahId !== 9"
-            class="w-full text-center mb-3 sm:mb-8 select-none relative z-10"
-          >
-            <div class="flex items-center justify-center text-center w-full relative" dir="rtl">
-              <!-- Special Interactive Bismillah for Al-Fatihah (Ayah 1 is Bismillah) -->
-              <div v-if="selectedSurahId === 1" class="font-uthmani text-[clamp(1.15rem,4.5vw,2rem)] sm:text-4xl text-[#064e3b] font-bold leading-normal select-none flex items-center justify-center text-center w-full relative z-10" dir="rtl" style="font-family: 'Amiri', serif !important;">
-                <div class="inline-flex items-center justify-center gap-x-1.5 sm:gap-x-2">
-                  <span :id="`ayah-${selectedSurahId}-1`" class="transition-all duration-1000 rounded-xl px-1 py-0.5 inline">
-                    <QuranInteractiveWord 
-                      v-for="word in page.ayahs.find(a => a.ayat_number === 1)?.words" 
-                      :key="word.id" 
-                      :word="word" 
+              v-for="line in page.lines" 
+              :key="line.lineNumber"
+              class="w-full flex items-center justify-center relative"
+            >
+              <!-- RENDER SURAH PLATE ON LINE 1 (If first page of Surah) -->
+              <template v-if="page.pageNumber === firstPageOfSurah && line.lineNumber === 1">
+                <div 
+                  class="w-full bg-[#ffffff] px-0 mx-0 mb-1.5 sm:mb-3 rounded-none relative overflow-hidden flex flex-col items-center justify-center select-none h-[46px] sm:h-[64px] border border-[#c29b38] z-10"
+                >
+                  <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 600 80" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="2" width="596" height="76" rx="6" fill="#ffffff" stroke="#c29b38" stroke-width="2.2" />
+                    <rect x="5" y="5" width="590" height="70" rx="4" fill="none" stroke="#14b8a6" stroke-width="0.8" stroke-dasharray="3,2" />
+                    <g opacity="0.95">
+                      <circle cx="80" cy="40" r="12" fill="#ffffff" stroke="#c29b38" stroke-width="1.2" />
+                      <path d="M 80 26 L 80 54 M 66 40 L 94 40 M 70 30 L 90 50 M 70 50 L 90 30" stroke="#14b8a6" stroke-width="0.8" />
+                      <circle cx="80" cy="40" r="6" fill="#c29b38" />
+                      <circle cx="80" cy="40" r="3" fill="#ffffff" />
+                      <path d="M 68 40 C 48 32, 33 48, 18 40" stroke="#c29b38" stroke-width="1.5" fill="none" />
+                      <path d="M 92 40 C 112 32, 127 48, 142 40" stroke="#c29b38" stroke-width="1.5" fill="none" />
+                      <path d="M 33 36 C 25 28, 20 40, 28 44 C 32 41, 36 38, 33 36 Z" fill="#14b8a6" stroke="#c29b38" stroke-width="0.6" opacity="0.9" />
+                      <path d="M 127 36 C 119 28, 114 40, 122 44 C 126 41, 130 38, 127 36 Z" fill="#14b8a6" stroke="#c29b38" stroke-width="0.6" opacity="0.9" />
+                      <path d="M 52 28 Q 66 16 80 26 Q 66 24 52 28 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
+                      <path d="M 52 52 Q 66 64 80 54 Q 66 56 52 52 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
+                      <path d="M 108 28 Q 94 16 80 26 Q 94 24 108 28 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
+                      <path d="M 108 52 Q 94 64 80 54 Q 94 56 108 52 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
+                    </g>
+                    <g opacity="0.95" transform="translate(600,0) scale(-1,1)">
+                      <circle cx="80" cy="40" r="12" fill="#ffffff" stroke="#c29b38" stroke-width="1.2" />
+                      <path d="M 80 26 L 80 54 M 66 40 L 94 40 M 70 30 L 90 50 M 70 50 L 90 30" stroke="#14b8a6" stroke-width="0.8" />
+                      <circle cx="80" cy="40" r="6" fill="#c29b38" />
+                      <circle cx="80" cy="40" r="3" fill="#ffffff" />
+                      <path d="M 68 40 C 48 32, 33 48, 18 40" stroke="#c29b38" stroke-width="1.5" fill="none" />
+                      <path d="M 92 40 C 112 32, 127 48, 142 40" stroke="#c29b38" stroke-width="1.5" fill="none" />
+                      <path d="M 33 36 C 25 28, 20 40, 28 44 C 32 41, 36 38, 33 36 Z" fill="#14b8a6" stroke="#c29b38" stroke-width="0.6" opacity="0.9" />
+                      <path d="M 127 36 C 119 28, 114 40, 122 44 C 126 41, 130 38, 127 36 Z" fill="#14b8a6" stroke="#c29b38" stroke-width="0.6" opacity="0.9" />
+                      <path d="M 52 28 Q 66 16 80 26 Q 66 24 52 28 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
+                      <path d="M 52 52 Q 66 64 80 54 Q 66 56 52 52 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
+                      <path d="M 108 28 Q 94 16 80 26 Q 94 24 108 28 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
+                      <path d="M 108 52 Q 94 64 80 54 Q 94 56 108 52 Z" fill="#ffffff" stroke="#c29b38" stroke-width="0.8" />
+                    </g>
+                    <path d="M 180 12 L 420 12 C 435 12, 435 20, 435 28 C 435 36, 442 40, 446 40 C 442 40, 435 44, 435 52 C 435 60, 435 68, 420 68 L 180 68 C 165 68, 165 60, 165 52 C 165 44, 158 40, 154 40 C 158 40, 165 36, 165 28 C 165 20, 165 12, 180 12 Z" fill="#ffffff" stroke="#c29b38" stroke-width="2.5" />
+                    <path d="M 183 15 L 417 15 C 431 15, 431 23, 431 29 C 431 35, 438 39, 442 40 C 438 41, 431 45, 431 51 C 431 57, 431 65, 417 65 L 183 65 C 169 65, 169 57, 169 51 C 169 45, 162 41, 158 40 C 162 39, 169 35, 169 29 C 169 23, 169 15, 183 15 Z" fill="none" stroke="#14b8a6" stroke-width="0.8" stroke-dasharray="3,2" />
+                  </svg>
+                  <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                    <img 
+                      v-if="selectedSurahId"
+                      :src="`https://cdn.jsdelivr.net/gh/gyenabubakar/surah-name-glyphs@master/svg/${selectedSurahId}.svg`" 
+                      :alt="surahInfo?.name_latin" 
+                      class="h-[32px] sm:h-[42px] w-auto max-w-[170px] sm:max-w-[230px] object-contain filter select-none pointer-events-none"
+                      style="filter: invert(18%) sepia(35%) saturate(2132%) hue-rotate(120deg) brightness(95%) contrast(98%);" 
                     />
-                  </span>
-                  
-                  <!-- Beautifully Aligned Premium Gold/Teal Medallion (1) -->
-                  <span class="relative inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 select-none align-middle cursor-default shrink-0 translate-y-[5px] sm:translate-y-[5px]">
-                    <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full text-[#c29b38] transition-transform duration-300 hover:rotate-45">
-                      <rect x="22" y="22" width="56" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="5" transform="rotate(45 50 50)" />
-                      <rect x="22" y="22" width="56" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="5" />
-                      <circle cx="50" cy="50" r="23" fill="#fdfcf7" stroke="currentColor" stroke-width="2.5" />
-                      <circle cx="50" cy="50" r="19" fill="none" stroke="#064e3b" stroke-width="1.5" stroke-dasharray="3,2.5" />
-                      <circle cx="50" cy="11" r="3.5" fill="#064e3b" />
-                      <circle cx="50" cy="89" r="3.5" fill="#064e3b" />
-                      <circle cx="11" cy="50" r="3.5" fill="#064e3b" />
-                      <circle cx="89" cy="50" r="3.5" fill="#064e3b" />
-                      <circle cx="22.5" cy="22.5" r="3.5" fill="#064e3b" />
-                      <circle cx="77.5" cy="22.5" r="3.5" fill="#064e3b" />
-                      <circle cx="22.5" cy="77.5" r="3.5" fill="#064e3b" />
-                      <circle cx="77.5" cy="77.5" r="3.5" fill="#064e3b" />
-                    </svg>
-                    <span class="relative z-10 text-[9px] sm:text-[10px] font-black text-[#064e3b] select-none flex items-center justify-center leading-none" style="font-family: 'Outfit', sans-serif;">
-                      {{ toArabicNumber(1) }}
-                    </span>
-                  </span>
+                  </div>
                 </div>
-              </div>
-              
-              <div v-else class="font-uthmani text-[clamp(1.2rem,4vw,2rem)] sm:text-4xl text-[#064e3b] font-normal leading-normal select-none flex items-center justify-center text-center w-full" style="font-family: 'Amiri', serif !important;">
-                <span>بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</span>
-              </div>
-            </div>
-          </div>
+              </template>
 
-          <div class="text-justify leading-[1.12] sm:leading-[1.4] lg:leading-[1.5] select-none relative z-10 pb-3 sm:pb-4 w-full" style="text-align: justify; text-justify: auto; text-align-last: center;">
-            <div class="font-uthmani block text-justify w-full" dir="rtl" style="color: #064e3b !important; text-align: justify; text-justify: inter-word; text-align-last: center; word-spacing: -0.09em;">
-              <template 
-                v-for="ayat in (selectedSurahId === 1 ? page.ayahs.filter(a => a.ayat_number > 1) : page.ayahs)" 
-                :key="ayat.id"
-              >
-                <!-- Wrapper for Ayah words to support precise scrolling & highlights (with integrated medallion) -->
-                <span :id="`ayah-${selectedSurahId}-${ayat.ayat_number}`" class="transition-all duration-1000 rounded-xl px-[2px] sm:px-1 py-0.5 inline">
-                  <template v-for="(word, wIdx) in ayat.words" :key="word.id"><QuranInteractiveWord :word="word" /><span v-if="wIdx < ayat.words.length - 1">{{ ' ' }}</span></template><span class="relative inline-flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 mr-1.5 ml-1.5 sm:mr-2 sm:ml-2 select-none align-middle cursor-default shrink-0 translate-y-[4px] sm:translate-y-[5px]">
-                    <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full text-[#c29b38] transition-transform duration-300 hover:rotate-45">
-                      <rect x="22" y="22" width="56" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="5" transform="rotate(45 50 50)" />
-                      <rect x="22" y="22" width="56" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="5" />
-                      <circle cx="50" cy="50" r="23" fill="#fdfcf7" stroke="currentColor" stroke-width="2.5" />
-                      <circle cx="50" cy="50" r="19" fill="none" stroke="#064e3b" stroke-width="1.5" stroke-dasharray="3,2.5" />
-                      <circle cx="50" cy="11" r="3.5" fill="#064e3b" />
-                      <circle cx="50" cy="89" r="3.5" fill="#064e3b" />
-                      <circle cx="11" cy="50" r="3.5" fill="#064e3b" />
-                      <circle cx="89" cy="50" r="3.5" fill="#064e3b" />
-                      <circle cx="22.5" cy="22.5" r="3.5" fill="#064e3b" />
-                      <circle cx="77.5" cy="22.5" r="3.5" fill="#064e3b" />
-                      <circle cx="22.5" cy="77.5" r="3.5" fill="#064e3b" />
-                      <circle cx="77.5" cy="77.5" r="3.5" fill="#064e3b" />
-                    </svg>
-                    <span class="relative z-10 text-[8px] sm:text-[10px] font-black text-[#064e3b] select-none flex items-center justify-center leading-none" style="font-family: 'Outfit', sans-serif;">
-                      {{ toArabicNumber(ayat.ayat_number) }}
+              <!-- RENDER BISMILLAH PLATE ON LINE 2 (If first page of Surah and not Surah At-Tawbah) -->
+              <template v-else-if="page.pageNumber === firstPageOfSurah && line.lineNumber === 2 && selectedSurahId !== 9">
+                <div class="w-full text-center select-none relative z-10 flex items-center justify-center">
+                  <!-- Special Interactive Bismillah for Al-Fatihah (Ayah 1 is Bismillah) -->
+                  <div v-if="selectedSurahId === 1" class="font-uthmani text-[clamp(1.15rem,4.5vw,2rem)] sm:text-4xl text-[#064e3b] font-bold leading-normal select-none flex items-center justify-center text-center w-full relative z-10" dir="rtl" style="font-family: 'Amiri', serif !important;">
+                    <div class="inline-flex items-center justify-center gap-x-1.5 sm:gap-x-2">
+                      <span :id="`ayah-${selectedSurahId}-1`" class="transition-all duration-1000 rounded-xl px-1 py-0.5 inline flex items-center gap-1">
+                        <template v-for="item in line.items" :key="item.id">
+                          <QuranInteractiveWord 
+                            v-if="item.type === 'word'" 
+                            :word="item" 
+                          />
+                          <span 
+                            v-else-if="item.type === 'medallion'"
+                            class="relative inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 select-none align-middle cursor-default shrink-0 translate-y-[1px]"
+                          >
+                            <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full text-[#c29b38]">
+                              <rect x="22" y="22" width="56" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="5" transform="rotate(45 50 50)" />
+                              <rect x="22" y="22" width="56" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="5" />
+                              <circle cx="50" cy="50" r="23" fill="#fdfcf7" stroke="currentColor" stroke-width="2.5" />
+                              <circle cx="50" cy="50" r="19" fill="none" stroke="#064e3b" stroke-width="1.5" stroke-dasharray="3,2.5" />
+                              <circle cx="50" cy="11" r="3.5" fill="#064e3b" />
+                              <circle cx="50" cy="89" r="3.5" fill="#064e3b" />
+                              <circle cx="11" cy="50" r="3.5" fill="#064e3b" />
+                              <circle cx="89" cy="50" r="3.5" fill="#064e3b" />
+                              <circle cx="22.5" cy="22.5" r="3.5" fill="#064e3b" />
+                              <circle cx="77.5" cy="22.5" r="3.5" fill="#064e3b" />
+                              <circle cx="22.5" cy="77.5" r="3.5" fill="#064e3b" />
+                              <circle cx="77.5" cy="77.5" r="3.5" fill="#064e3b" />
+                            </svg>
+                            <span class="relative z-10 text-[9px] sm:text-[10px] font-black text-[#064e3b] select-none flex items-center justify-center leading-none" style="font-family: 'Outfit', sans-serif;">
+                              {{ toArabicNumber(1) }}
+                            </span>
+                          </span>
+                        </template>
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div v-else class="font-uthmani text-[clamp(1.2rem,4vw,2rem)] sm:text-4xl text-[#064e3b] font-normal leading-normal select-none flex items-center justify-center text-center w-full" style="font-family: 'Amiri', serif !important;">
+                    <span>بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</span>
+                  </div>
+                </div>
+              </template>
+
+              <!-- RENDER REGULAR QURAN LINE FOR ALL OTHER LINES -->
+              <template v-else>
+                <div 
+                  class="font-uthmani block w-full select-none px-1.5 sm:px-2" 
+                  dir="rtl" 
+                  :style="{
+                    'color': '#064e3b',
+                    'text-align': (page.pageNumber === 1 || page.pageNumber === 2) ? 'center' : 'justify',
+                    'text-justify': (page.pageNumber === 1 || page.pageNumber === 2) ? 'none' : 'auto',
+                    'text-align-last': (page.pageNumber === 1 || page.pageNumber === 2) ? 'center' : 'justify'
+                  }"
+                >
+                  <template v-for="(item, idx) in line.items" :key="item.id">
+                    <!-- Render Word -->
+                    <QuranInteractiveWord 
+                      v-if="item.type === 'word'" 
+                      :word="item" 
+                    />
+                    
+                    <!-- Render Medallion -->
+                    <span 
+                      v-else-if="item.type === 'medallion'"
+                      class="relative inline-flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 mx-0.5 sm:mx-1 select-none align-middle cursor-default shrink-0 translate-y-[4px] sm:translate-y-[5px]"
+                    >
+                      <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full text-[#c29b38] transition-transform duration-300 hover:rotate-45">
+                        <rect x="22" y="22" width="56" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="5" transform="rotate(45 50 50)" />
+                        <rect x="22" y="22" width="56" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="5" />
+                        <circle cx="50" cy="50" r="23" fill="#fdfcf7" stroke="currentColor" stroke-width="2.5" />
+                        <circle cx="50" cy="50" r="19" fill="none" stroke="#064e3b" stroke-width="1.5" stroke-dasharray="3,2.5" />
+                        <circle cx="50" cy="11" r="3.5" fill="#064e3b" />
+                        <circle cx="50" cy="89" r="3.5" fill="#064e3b" />
+                        <circle cx="11" cy="50" r="3.5" fill="#064e3b" />
+                        <circle cx="89" cy="50" r="3.5" fill="#064e3b" />
+                        <circle cx="22.5" cy="22.5" r="3.5" fill="#064e3b" />
+                        <circle cx="77.5" cy="22.5" r="3.5" fill="#064e3b" />
+                        <circle cx="22.5" cy="77.5" r="3.5" fill="#064e3b" />
+                        <circle cx="77.5" cy="77.5" r="3.5" fill="#064e3b" />
+                      </svg>
+                      <span class="relative z-10 text-[8px] sm:text-[10px] font-black text-[#064e3b] select-none flex items-center justify-center leading-none" style="font-family: 'Outfit', sans-serif;">
+                        {{ toArabicNumber(item.verse_number) }}
+                      </span>
                     </span>
-                  </span>
-                </span>{{ ' ' }}
+                    
+                    <!-- Crucial explicit space to allow standard CSS text-align: justify to expand spacing correctly between inline elements -->
+                    <span v-if="idx < line.items.length - 1">{{ ' ' }}</span>
+                  </template>
+                </div>
               </template>
             </div>
-          </div>
           </div>
  
           <!-- Page Number Indicator at bottom center (Pushed to bottom) -->
@@ -601,16 +602,42 @@ const firstPageOfSurah = computed(() => {
   return surahPages.value.length > 0 ? surahPages.value[0].pageNumber : null
 })
 
-// Dynamic page font size scaling helper based on word density to guarantee exactly 15 lines on both mobile & desktop
-const getPageWordCount = (page) => {
-  if (!page || !page.ayahs) return 0
-  return page.ayahs.reduce((sum, a) => sum + (a.words ? a.words.length : 0), 0)
+// Dynamic page font size scaling helper based on plain character count density to guarantee exactly 15 lines on both mobile & desktop
+const getPageCharCount = (page) => {
+  if (!page || !page.lines) return 0
+  return page.lines.reduce((sum, line) => {
+    return sum + line.items.reduce((itemSum, item) => {
+      if (item.type === 'word' && item.text_arabic) {
+        const letters = getPlainArabicLetters(item.text_arabic)
+        return itemSum + (letters ? letters.length : 0)
+      }
+      return itemSum
+    }, 0)
+  }, 0)
 }
 
 const getPageStyle = (page) => {
-  const wordCount = getPageWordCount(page)
-  // Baseline is 123 words per page. Scale factor clamped between 0.75 and 1.0.
-  const scale = Math.min(1.0, Math.max(0.75, 123 / wordCount))
+  if (!page || !page.lines) return { '--page-font-scale': 1.0 }
+  
+  // Calculate the physical horizontal length of the longest line by removing all diacritics (harakat/tashkeel)
+  const maxLineLength = Math.max(
+    ...page.lines.map(line => {
+      if (!line.items) return 0
+      return line.items.reduce((acc, item) => {
+        if (item.type === 'word') {
+          // Remove all diacritics/tashkeel to get the actual horizontal letter width count
+          const cleanText = item.text_arabic ? item.text_arabic.replace(/[\u064B-\u065F\u0670]/g, '') : ''
+          return acc + cleanText.length
+        }
+        return acc + 3 // Medallion weight
+      }, 0)
+    })
+  )
+
+  // Baseline physical length for 100% font size is ~35.5 Arabic letters.
+  // We scale down dynamically and safely, keeping the font large and beautiful.
+  const scale = Math.min(1.05, Math.max(0.865, 35.5 / maxLineLength))
+  
   return {
     '--page-font-scale': scale
   }
@@ -719,8 +746,8 @@ const initScrollObserver = () => {
         if (pageNum) {
           currentPageNum.value = pageNum
           const pageObj = surahPages.value.find(p => p.pageNumber === pageNum)
-          if (pageObj && pageObj.ayahs.length > 0) {
-            currentJuzNum.value = pageObj.ayahs[0].juz
+          if (pageObj && pageObj.juz) {
+            currentJuzNum.value = pageObj.juz
           }
         }
       }
@@ -755,54 +782,71 @@ const fetchSurah = async (pageNumToScroll = null) => {
         revelation_type: data.revelationType
       }
 
-      const pagesMap = {}
+      // Fetch precise Medina layout mapping from Quran.com V4 API (using per_page=300 to fetch the entire Surah at once)
+      const quranRes = await $fetch(`https://api.quran.com/api/v4/verses/by_chapter/${selectedSurahId.value}?words=true&word_fields=text_uthmani&per_page=300`)
+      if (quranRes && quranRes.verses) {
+        const pagesMap = {}
 
-      data.ayahs.forEach(ayah => {
-        if (!pagesMap[ayah.page]) {
-          pagesMap[ayah.page] = {
-            pageNumber: ayah.page,
-            ayahs: []
-          }
-        }
+        quranRes.verses.forEach(verse => {
+          verse.words.forEach((word, wIdx) => {
+            if (word.char_type_name !== 'word' && word.char_type_name !== 'end') return
 
-        let text = ayah.text;
-        if (data.number !== 1 && ayah.numberInSurah === 1) {
-          text = text.replace(/^بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ\s*/, '');
-          text = text.replace(/^بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ\s*/, '');
-        }
+            const pageNum = word.page_number
+            if (!pagesMap[pageNum]) {
+              pagesMap[pageNum] = {
+                pageNumber: pageNum,
+                lines: Array.from({ length: 15 }, (_, i) => ({
+                  lineNumber: i + 1,
+                  items: []
+                })),
+                juz: verse.juz_number
+              }
+            }
 
-        const wordsText = text.split(' ').filter(w => w.trim() !== '');
-        const words = wordsText.map((w, index) => {
-          const isLastWord = index === wordsText.length - 1;
-          const nextWord = isLastWord ? null : wordsText[index + 1];
-          const tajwids = analyzeWordTajwid(w, nextWord, isLastWord);
-          
-          const plainLetters = getPlainArabicLetters(w);
-          const sifatHurufs = plainLetters.map(char => analyzeLetter(char)).filter(x => x !== null);
+            let targetLineIdx = word.line_number - 1
+            
+            // For Al-Fatihah, override Bismillah (Verse 1) to be on Line 2 (index 1) so it sits inside the Bismillah container
+            if (selectedSurahId.value === 1 && verse.verse_number === 1) {
+              targetLineIdx = 1
+            }
 
-          return {
-            id: `${ayah.numberInSurah}-${index}`,
-            text_arabic: w,
-            tajwids,
-            sifatHurufs
-          }
-        });
+            if (targetLineIdx >= 0 && targetLineIdx < 15) {
+              if (word.char_type_name === 'word') {
+                const w = word.text_uthmani
+                
+                const isLastWord = wIdx === verse.words.length - 2;
+                const nextWord = isLastWord ? null : verse.words[wIdx + 1]?.text_uthmani;
+                const tajwids = analyzeWordTajwid(w, nextWord, isLastWord);
+                
+                const plainLetters = getPlainArabicLetters(w);
+                const sifatHurufs = plainLetters.map(char => analyzeLetter(char)).filter(x => x !== null);
 
-        pagesMap[ayah.page].ayahs.push({
-          id: ayah.number,
-          ayat_number: ayah.numberInSurah,
-          juz: ayah.juz,
-          words: words
+                pagesMap[pageNum].lines[targetLineIdx].items.push({
+                  type: 'word',
+                  id: `${verse.verse_number}-${wIdx}`,
+                  text_arabic: w,
+                  tajwids,
+                  sifatHurufs,
+                  verse_number: verse.verse_number
+                })
+              } else if (word.char_type_name === 'end') {
+                pagesMap[pageNum].lines[targetLineIdx].items.push({
+                  type: 'medallion',
+                  verse_number: verse.verse_number
+                })
+              }
+            }
+          })
         })
-      });
 
-      surahPages.value = Object.values(pagesMap).sort((a, b) => a.pageNumber - b.pageNumber)
+        surahPages.value = Object.values(pagesMap).sort((a, b) => a.pageNumber - b.pageNumber)
+      }
 
       // Set initial page & juz
       if (surahPages.value.length > 0) {
         currentPageNum.value = surahPages.value[0].pageNumber
-        if (surahPages.value[0].ayahs.length > 0) {
-          currentJuzNum.value = surahPages.value[0].ayahs[0].juz
+        if (surahPages.value[0].juz) {
+          currentJuzNum.value = surahPages.value[0].juz
         }
       }
 
@@ -898,17 +942,22 @@ body {
 .font-uthmani {
   font-family: 'Amiri Quran', 'Amiri', 'Uthmanic Hafs', serif !important;
   letter-spacing: normal !important;
-  word-spacing: -0.07em !important;
+  word-spacing: -0.08em !important;
   font-feature-settings: "liga" on, "clig" on !important;
   font-variant-ligatures: common-ligatures !important;
+  text-align: justify !important;
+  text-justify: auto !important;
+  line-height: 2.0 !important;
   
   /* Dynamic font-size using CSS custom property that automatically scales based on the page's word count! */
-  font-size: calc(clamp(0.96rem, 2.45dvh, 1.4rem) * var(--page-font-scale, 1.0)) !important;
+  font-size: calc(clamp(0.85rem, 2.15dvh, 1.25rem) * var(--page-font-scale, 1.0)) !important;
 }
 
 @media (min-width: 640px) {
   .font-uthmani {
-    font-size: calc(clamp(1.55rem, 4vh, 1.95rem) * var(--page-font-scale, 1.0)) !important;
+    font-size: calc(clamp(1.4rem, 3.50vh, 1.8rem) * var(--page-font-scale, 1.0)) !important;
+    word-spacing: -0.1em !important;
+    line-height: 2.0 !important;
   }
 }
 

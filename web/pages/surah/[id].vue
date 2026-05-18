@@ -40,7 +40,7 @@
     </header>
 
     <!-- Main Content Reader Container (Optimized widths & paddings for mobile) -->
-    <main class="max-w-[530px] mx-auto px-0 sm:px-6 py-4 sm:py-12 relative z-10">
+    <main class="w-full max-w-[530px] sm:max-w-[640px] md:max-w-[700px] mx-auto px-0 sm:px-6 py-4 sm:py-12 relative z-10">
       
       <div 
         ref="scrollContainer"
@@ -162,7 +162,7 @@
               <!-- RENDER REGULAR QURAN LINE FOR ALL OTHER LINES -->
               <template v-else>
                 <div 
-                  class="font-uthmani block w-full select-none px-1.5 sm:px-2" 
+                  class="font-uthmani block w-full select-none px-1.5 sm:px-2 whitespace-nowrap" 
                   dir="rtl" 
                   :style="{
                     'color': '#064e3b',
@@ -181,7 +181,7 @@
                     <!-- Render Medallion -->
                     <span 
                       v-else-if="item.type === 'medallion'"
-                      class="relative inline-flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 mx-0.5 sm:mx-1 select-none align-middle cursor-default shrink-0 translate-y-[4px] sm:translate-y-[5px]"
+                      class="relative inline-flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 mx-0.5 sm:mx-1 select-none align-middle cursor-default shrink-0 translate-y-[0px] sm:translate-y-[0px]"
                     >
                       <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full text-[#c29b38] transition-transform duration-300 hover:rotate-45">
                         <rect x="22" y="22" width="56" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="5" transform="rotate(45 50 50)" />
@@ -955,8 +955,8 @@ body {
 
 @media (min-width: 640px) {
   .font-uthmani {
-    font-size: calc(clamp(1.4rem, 3.50vh, 1.8rem) * var(--page-font-scale, 1.0)) !important;
-    word-spacing: -0.1em !important;
+    font-size: calc(clamp(1.5rem, 2vw + 1.5vh, 2.0rem) * var(--page-font-scale, 1.0)) !important;
+    word-spacing: -0.05em !important;
     line-height: 2.0 !important;
   }
 }
